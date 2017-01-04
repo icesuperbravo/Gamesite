@@ -28,7 +28,7 @@ Subsystems:
 
 The detailed technical implementations of these features will be discussed in the first meeting on 02.01.2016. 
 
-
+![Alt text](/diagram1.png)
    
 Diagram 1. Basic outline of required database models.
 
