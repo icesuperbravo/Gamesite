@@ -1,5 +1,5 @@
 """
-Django settings for gettingstarted project, on Heroku. For more info, see:
+Django settings for gamesite project, on Heroku. For more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -76,10 +76,22 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# Database PostgreSQL
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "icesuperbravo",
+        "USER": "icesuperbravo",
+        "PASSWORD": "",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -105,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Helsinki'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -137,12 +149,12 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Only when running in Heroku
-# if "DYNO" in os.environ:
-#     STATIC_ROOT = 'staticfiles'
-#     import dj_database_url
-#     DATABASES['default'] =  dj_database_url.config()
-#
-#     DEBUG = True # False, once service is succesfully deployed
-#     ALLOWED_HOSTS = ['*']
+if "DYNO" in os.environ:
+    STATIC_ROOT = 'staticfiles'
+    import dj_database_url
+    DATABASES['default'] =  dj_database_url.config()
+
+    DEBUG = True # False, once service is succesfully deployed
+    ALLOWED_HOSTS = ['*']
 
 
