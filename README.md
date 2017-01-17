@@ -25,11 +25,18 @@ If Postgres complains about user on server start:
  
  
  #### If you don't want to run in Heroku, try instead: ####
-     `virtualenv venv`
-     `source venv/bin/activate`
-     `pip install -r requirements.txt` //only need to run this once
-     `python manage.py makemigrations` 
-     `python manage.py migrate`
-     `python manage.py runserver`
+    `virtualenv venv`
+    `source venv/bin/activate`
+    `pip install -r requirements.txt` //only need to run this once
+    `python manage.py makemigrations` 
+    `python manage.py migrate`
+    `python manage.py runserver`
 
 Then test in your browser at e.g. http://localhost:8000/index/
+
+To kill the server (OS X):
+
+    `pkill -f 'python manage.py runserver'`
+or  
+    
+    `pkill -f python`

@@ -5,10 +5,13 @@ from django.forms import ModelForm
 
 class Game(models.Model):
     id = models.AutoField(primary_key=True)
-    """developer = models.ForeignKey(
+    """
+    TODO: add developer field when authentication is implemented
+    developer = models.ForeignKey(
         'User',
         on_delete=models.CASCADE,
-    )"""
+    )
+    """
     title = models.CharField(max_length=255, default="Title", unique=True)
     description = models.TextField(default='descr')
     image_url = models.URLField(blank = True)
@@ -26,3 +29,5 @@ class DeleteGameForm(ModelForm):
     class Meta:
         model = Game
         fields = []
+
+""" TODO: HighsCore model - with fields game, score, and user """
