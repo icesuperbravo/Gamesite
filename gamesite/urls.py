@@ -16,8 +16,13 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from game.views import *
 
 urlpatterns = [
-    url(r'^index/', include('game.urls')),
+
+    url(r'^$', home),
+    url(r'^login/', login),
+    url(r'^register/', register),
     url(r'^admin/', admin.site.urls),
+
 ]
