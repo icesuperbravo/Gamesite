@@ -1,1 +1,14 @@
-{% for g in games %}{{p.id}},{% endfor %}
+<h1>All games</h1>
+{% for g in games %}
+    <div>
+        {{g.id}} {{g.title}} {% endfor %}
+    </div>
+
+<h1>Add new game</h1>
+<div>
+    <form method="post" action="">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit">
+    </form>
+</div>
