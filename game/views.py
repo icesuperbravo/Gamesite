@@ -16,5 +16,5 @@ def gameview(request, product_id):
 
 def available_games(request):
     """A view of all games."""
-    bands = models.Games.objects.all()
-    return render(request, 'game/game_list.html', {'bands': bands})
+    games = models.Games.objects.all()
+    return render(request, 'game/game_list.html', {'games': games})
