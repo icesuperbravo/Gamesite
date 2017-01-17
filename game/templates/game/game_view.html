@@ -12,3 +12,12 @@
         image URL: {{game.image_url}}
     </div>
 </div>
+
+<div>
+    <h3>Delete game</h3>
+    <form method="post" action="">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit">
+    </form>
+</div>
