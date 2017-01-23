@@ -38,7 +38,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'game',
+    'crispy_forms',
+
+
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -158,3 +163,6 @@ if "DYNO" in os.environ:
     ALLOWED_HOSTS = ['*']
 
 
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
+LOGOUT_URL = "/logout/"

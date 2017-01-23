@@ -1,5 +1,10 @@
-﻿# CS-C3170 Web Software Development Project Plan
+﻿# Gamesite
 
+The Gamesite uses **Bootstrap** framework and **crispy form** to style the website.
+
+http://getbootstrap.com/
+
+http://django-crispy-forms.readthedocs.io/en/latest/
 # 1.Running the test in local environment
  `virtualenv venv` //create a virtualenv for the app;
 
