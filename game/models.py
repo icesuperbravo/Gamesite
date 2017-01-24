@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
 
@@ -31,3 +32,15 @@ class DeleteGameForm(ModelForm):
         fields = []
 
 """ TODO: HighsCore model - with fields game, score, and user """
+
+
+class UserDetails(models.Model):
+    User = models.OneToOneField(User, on_delete=models.CASCADE)
+    # role = models.TypedChoiceField(
+    #     label = "Please choose your role to register GameSite:",
+    #     choices = ((1, "Developer"), (0, "Gamer")),
+    #     coerce = lambda x: bool(int(x)),
+    #     widget = models.RadioSelect,
+    #     initial = '1',
+    #     required = True,
+    #)
