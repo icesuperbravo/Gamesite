@@ -9,7 +9,8 @@
     <hr/>
 
     <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
-        {{ form|crispy }}
+        {{ user_form|crispy }}
+        {{ profile_form|crispy }}
         <input type='submit' class='btn btn-default' value='login' />
     </form>
 </div>

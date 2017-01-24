@@ -9,7 +9,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import  UserLoginForm, UserRegisterForm
+from .forms import  UserLoginForm, UserRegisterForm, ProfileForm
 
 
 def index(request):
@@ -53,28 +53,47 @@ def available_games(request):
 
 def login_view(request):
     title ="Gamesite Login"
+    print("Login view")
     form = UserLoginForm(request.POST or None)
     if form.is_valid():
+            print("Login form is valid")
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             login(request, user)
+    else:
+        print("Login form not valid")
 
     return render(request, "registration/form.html", {"form":form, "title":title})
 
 def register_view(request):
-    print(request.user.is_authenticated())
+    #print(request.user.is_authenticated())
     title = "Gamesite Registeration"
-    form = UserRegisterForm(request.POST or None)
-    if form.is_valid():
-        user = form.save(commit=False)
-        password = form.cleaned_data.get('password')
+    user_form = UserRegisterForm(request.POST or None)
+    # = UserForm(request.POST, instance=request.user)
+
+    if request.user.is_anonymous():
+        profile_form = ProfileForm(request.POST or None)
+    else:
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+
+    if user_form.is_valid() and profile_form.is_valid():
+        print("Forms are valid")
+        user = user_form.save(commit=False)
+        password = user_form.cleaned_data.get('password')
         user.set_password(password)
         user.save()
+        print("Saved user")
+        # profile_form.save()
+        # print("Saved profile")
         new_user = authenticate(username=user.username, password=password)
+        print("Logging in")
         login(request, new_user)
+        print("Redirecting")
         return HttpResponseRedirect("/")
-    return render(request, "registration/form.html",  {"form":form, "title":title})
+    else:
+        print("Forms not valid")
+    return render(request, "registration/form.html",  {"user_form":user_form, "profile_form":profile_form, "title":title})
 
 def logout_view(request):
     logout(request)

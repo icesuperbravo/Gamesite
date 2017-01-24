@@ -1,6 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
+from enum import Enum
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -34,13 +38,30 @@ class DeleteGameForm(ModelForm):
 """ TODO: HighsCore model - with fields game, score, and user """
 
 
-class UserDetails(models.Model):
-    User = models.OneToOneField(User, on_delete=models.CASCADE)
-    # role = models.TypedChoiceField(
-    #     label = "Please choose your role to register GameSite:",
-    #     choices = ((1, "Developer"), (0, "Gamer")),
-    #     coerce = lambda x: bool(int(x)),
-    #     widget = models.RadioSelect,
-    #     initial = '1',
-    #     required = True,
-    #)
+#class UserType(Enum):
+#    GAMER = 1
+#    DEVELOPER = 2
+
+#class UserDetails(models.Model):
+#    user = models.OneToOneField(User, on_delete=models.CASCADE)
+#    role = UserType
+
+
+class Profile(models.Model):
+    USERTYPE_PLAYER = 1
+    USERTYPE_DEVELOPER = 2
+    USERTYPE_CHOICES = (
+        (USERTYPE_PLAYER, 'Player'),
+        (USERTYPE_DEVELOPER, 'Developer'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=False)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

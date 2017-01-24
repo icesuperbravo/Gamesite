@@ -5,9 +5,10 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .models import UserDetails
+from .models import Profile
+from django.contrib.auth.models import User
 
-User = get_user_model()
+#User = get_user_model()
 print (User)
 
 class UserLoginForm(forms.Form):
@@ -41,12 +42,11 @@ class UserRegisterForm(forms.ModelForm):
             #print (UserDetails)
             fields = [
                 'username',
-                 'first_name',
+                'first_name',
                 'last_name',
                 'email',
                 'email2',
-                'password',
-                #'role'
+                'password'
             ]
 
     def clean_email2(self):
@@ -58,3 +58,15 @@ class UserRegisterForm(forms.ModelForm):
         if email_qs.exists():
             raise forms.ValidationError("This email has already been registered")
         return email
+
+class ProfileForm(forms.ModelForm):
+    usertype = forms.TypedChoiceField( label = "Do you like this website?",
+                                       choices = ((1, "Player"), (2, "Developer")),
+                                       coerce = lambda x: (int(x)),
+                                       widget = forms.RadioSelect,
+                                       initial = '1',
+                                       required = True,
+                                       )
+    class Meta:
+        model = Profile
+        fields = ('usertype',)
