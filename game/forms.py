@@ -9,7 +9,7 @@ from .models import Profile
 from django.contrib.auth.models import User
 
 #User = get_user_model()
-print (User)
+#print (User)
 
 class UserLoginForm(forms.Form):
     username = forms.CharField()
@@ -37,6 +37,7 @@ class UserRegisterForm(forms.ModelForm):
     email2 = forms.EmailField(label='Confirm Email')
     password = forms.CharField(widget=forms.PasswordInput)
 
+
     class Meta:
             model = User
             #print (UserDetails)
@@ -60,11 +61,11 @@ class UserRegisterForm(forms.ModelForm):
         return email
 
 class ProfileForm(forms.ModelForm):
+
     usertype = forms.TypedChoiceField( label = "Do you like this website?",
-                                       choices = ((1, "Player"), (2, "Developer")),
-                                       coerce = lambda x: (int(x)),
+                                       choices = ((0, "Player"), (1, "Developer")),
+                                       coerce=int,
                                        widget = forms.RadioSelect,
-                                       initial = '1',
                                        required = True,
                                        )
     class Meta:

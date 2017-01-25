@@ -48,20 +48,21 @@ class DeleteGameForm(ModelForm):
 
 
 class Profile(models.Model):
-    USERTYPE_PLAYER = 1
-    USERTYPE_DEVELOPER = 2
+    USERTYPE_PLAYER = 0
+    USERTYPE_DEVELOPER = 1
     USERTYPE_CHOICES = (
         (USERTYPE_PLAYER, 'Player'),
         (USERTYPE_DEVELOPER, 'Developer'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=False)
+    usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=True)
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+#
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
