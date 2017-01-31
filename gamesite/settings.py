@@ -138,6 +138,20 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+#Sending emails to my gmail account
+#EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'icesuperbravo@gmail.com'
+# EMAIL_HOST_PASSWORD = 'tatayoung1214'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+
+#sending emails to the console backend
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 

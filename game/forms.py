@@ -62,7 +62,7 @@ class UserRegisterForm(forms.ModelForm):
 
 class ProfileForm(forms.ModelForm):
 
-    usertype = forms.TypedChoiceField( label = "Do you like this website?",
+    usertype = forms.TypedChoiceField( label = "Which role do you want to be registered as?",
                                        choices = ((0, "Player"), (1, "Developer")),
                                        coerce=int,
                                        widget = forms.RadioSelect,
