@@ -49,3 +49,9 @@ To kill the server (OS X):
 or  
     
     `pkill -f python`
+    
+# 2. Running the local email server to test registration emailing function:
+
+Python has a little SMTP server built-in. You can start it in a second console with this command:
+
+`python -m smtpd -n -c DebuggingServer localhost:1025`
