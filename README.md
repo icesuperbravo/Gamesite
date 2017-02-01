@@ -2,25 +2,30 @@
 
 # 0. Setup
 Install python 3.5:
-https://www.python.org/downloads/release/python-352/
+ref: https://www.python.org/downloads/release/python-352/
 
 Install the Heroku CLI:
-https://devcenter.heroku.com/articles/getting-started-with-python#set-up
+ref: https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 
 Install Postgres:
-https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
+ref: https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
 
 If Postgres complains about user on server start:
  in settings.py / DATABASES / "default", change NAME and USER to your local username. Don't commit this file!
 
 Install crispy form:
 
-http://django-crispy-forms.readthedocs.io/en/latest/install.html#installing-django-crispy-forms  
+ref: http://django-crispy-forms.readthedocs.io/en/latest/install.html#installing-django-crispy-forms  
  
 The Gamesite uses **Bootstrap** framework for the frontend design. details on:
 
-http://getbootstrap.com/
+ref: http://getbootstrap.com/
 
+Install social-auth-app-django for 3rd party login:
+
+`pip install social-auth-app-django`
+
+ref: https://pypi.python.org/pypi/social-auth-app-django/
 
 # 1.Running the test in local environment
     `virtualenv venv` //create a virtualenv for the app;

@@ -38,7 +38,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'game',
+#styling the form
     'crispy_forms',
+#3rd party login
+    'social_django',
 
 
 )
@@ -54,6 +57,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+   # 'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'gamesite.urls'
@@ -70,10 +75,26 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_SECRET = '6570f77e60f21da6965380d5e23675c5'
+SOCIAL_AUTH_FACEBOOK_KEY = '1874746842814154'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '369019979835-0qk35vpinshmdbupds5i4ms46lrn65ev.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='M47ZpopdVg_748xCAzNV-lYH'
 
 WSGI_APPLICATION = 'gamesite.wsgi.application'
 

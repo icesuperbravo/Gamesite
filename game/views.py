@@ -81,7 +81,7 @@ def login_view(request):
     else:
         print("Login form not valid")
 
-    return render(request, "registration/form.html", {"form":form, "title":title})
+    return render(request, "registration/login.html", {"form":form, "title":title})
 
 
 def register_view(request):
@@ -134,7 +134,7 @@ def register_view(request):
         return HttpResponseRedirect("/")
     # else:
     #     print("Forms not valid")
-    return render(request, "registration/form.html",  {"user_form":user_form, "profile_form":profile_form, "title":title})
+    return render(request, "registration/register.html",  {"user_form":user_form, "profile_form":profile_form, "title":title})
 
 
 def logout_view(request):

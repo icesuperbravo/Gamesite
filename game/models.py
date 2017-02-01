@@ -56,6 +56,8 @@ class Profile(models.Model):
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=True)
+    owned_games = models.ManyToManyField(Game)
+
 
 
 # @receiver(post_save, sender=User)
