@@ -31,7 +31,6 @@ urlpatterns = [
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url('', include('social_django.urls', namespace='social')),
-
     # url(r'^register/$', CreateView.as_view(
     #     template_name='registration/register.html',
     #     form_class=UserCreationForm,
@@ -47,6 +46,6 @@ urlpatterns = [
 ]
 
 
-# LOGIN_URL = 'login'
-# LOGOUT_URL = 'logout'
-# LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'

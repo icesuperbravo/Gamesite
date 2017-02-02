@@ -32,7 +32,7 @@ DEBUG = True
 
 INSTALLED_APPS = (
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',gi
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -93,8 +93,8 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_FACEBOOK_SECRET = '6570f77e60f21da6965380d5e23675c5'
 SOCIAL_AUTH_FACEBOOK_KEY = '1874746842814154'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '369019979835-0qk35vpinshmdbupds5i4ms46lrn65ev.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='M47ZpopdVg_748xCAzNV-lYH'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '369019979835-juo8vsncs0o31rn7lggqtc5kaq1tckfn.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='8CtYt9LaHps3CWQl-qG0fYbh'
 
 WSGI_APPLICATION = 'gamesite.wsgi.application'
 
