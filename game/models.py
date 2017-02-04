@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.forms import ModelForm
-from enum import Enum
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -24,16 +23,7 @@ class Game(models.Model):
         self.title = new_title
         self.save()
 
-class CreateGameForm(ModelForm):
-    class Meta:
-        model = Game
-        fields = ['title', 'description', 'image_url']
 
-
-class DeleteGameForm(ModelForm):
-    class Meta:
-        model = Game
-        fields = []
 
 """ TODO: HighsCore model - with fields game, score, and user """
 
@@ -54,7 +44,7 @@ class Profile(models.Model):
         (USERTYPE_PLAYER, 'Player'),
         (USERTYPE_DEVELOPER, 'Developer'),
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=True)
     owned_games = models.ManyToManyField(Game)
 

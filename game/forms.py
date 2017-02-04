@@ -5,8 +5,10 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .models import Profile
+from .models import Profile, Game
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+
 
 #User = get_user_model()
 #print (User)
@@ -71,3 +73,19 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('usertype',)
+
+class CreateGameForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = ['title', 'description', 'image_url']
+
+
+class DeleteGameForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = []
+
+class BuyGameForm(ModelForm):
+    class Meta:
+        model = Game
+        fields = []

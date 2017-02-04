@@ -14,22 +14,13 @@
 </div>
 
 <div>
-    <h3>Delete game</h3>
+    <h3>BUY game</h3>
     <form method="post" action="">
-        {{ delete_form }}
+        {{ buy_form }}
         {% csrf_token %}
-        <input type="submit" value="Delete">
+        <input type="submit" value="BUY">
     </form>
 </div>
-
-<div>
-    <a href="./buy">
-        < Buy game
-    </a>
-</div>
-
-<div>
-    <a href="../">
-        < Back to index
-    </a>
-</div>
+<a href="../">
+    < Back to index
+</a>

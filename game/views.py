@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from game.models import Game, CreateGameForm, DeleteGameForm, Profile
+from game.models import Game, Profile
 from django.shortcuts import render_to_response,render
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import  UserLoginForm, UserRegisterForm, ProfileForm
+from .forms import  UserLoginForm, UserRegisterForm, ProfileForm, BuyGameForm, CreateGameForm, DeleteGameForm
 from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
@@ -27,21 +27,44 @@ def about(request):
     return HttpResponse("about page")
 
 @login_required()
-def gameview(request, product_id):
+def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
     if request.method == 'POST':
-        form = DeleteGameForm(request.POST, instance=game)
+        delete_form = DeleteGameForm(request.POST, instance=game)
 
-        if form.is_valid():
+
+        if delete_form.is_valid():
             game.delete()
-            return HttpResponseRedirect('/index/games/')
+            return HttpResponseRedirect('/games/')
 
     else:
-        form = DeleteGameForm(instance=game)
+        delete_form = DeleteGameForm(instance=game)
 
-    return render(request, 'game/game_view.html', {'game': game, 'form': form})
+    return render(request, 'game/game_view.html', {'game': game, 'delete_form': delete_form})
+
+def game_buy_view(request, product_id):
+    """A view of a single game."""
+    game = Game.objects.get(pk=product_id)
+
+    if request.method == 'POST':
+        buy_form = BuyGameForm(request.POST, instance=game)
+
+
+        if buy_form.is_valid():
+            user = request.user
+            if user.is_authenticated:
+                user.profile.owned_games.add(game)
+                print("Successfully bought game")
+            else:
+                print("Can't buy game when not logged in!")
+            return HttpResponseRedirect('/games/')
+
+    else:
+        buy_form = DeleteGameForm(instance=game)
+
+    return render(request, 'game/game_buy_view.html', {'game': game, 'buy_form': buy_form})
 
 def available_games(request):
     """A view of all games."""
