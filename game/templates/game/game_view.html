@@ -16,6 +16,7 @@
     </div>
 </div>
 
+{% if delete_form != None %}
 <div>
     <h3>Delete game</h3>
     <form method="post" action="">
@@ -24,6 +25,7 @@
         <input type="submit" value="Delete">
     </form>
 </div>
+{% endif %}
 
 <div>
     <a href="./buy">

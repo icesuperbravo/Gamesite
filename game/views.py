@@ -31,16 +31,17 @@ def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
-    if request.method == 'POST':
-        delete_form = DeleteGameForm(request.POST, instance=game)
+    if (game.creator == request.user.profile):
+        if request.method == 'POST':
+            delete_form = DeleteGameForm(request.POST, instance=game)
 
-
-        if delete_form.is_valid():
-            game.delete()
-            return HttpResponseRedirect('/games/')
-
+            if delete_form.is_valid():
+                game.delete()
+                return HttpResponseRedirect('/games/')
+        else:
+            delete_form = DeleteGameForm(instance=game)
     else:
-        delete_form = DeleteGameForm(instance=game)
+        delete_form = None
 
     return render(request, 'game/game_view.html', {'game': game, 'delete_form': delete_form})
 
@@ -209,9 +210,3 @@ def test(request):
         return HttpResponse("url authenticated")
     else:
         return HttpResponse("failure")
-
-
-
-
-
-
