@@ -9,10 +9,12 @@
 
     <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
 
-        {{ user_form|crispy }}
-        {{ profile_form|crispy }}
+
         {{ form|crispy }}
         <input type='submit' class='btn btn-default' value='login' />
     </form>
+    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+
 </div>
 {% endblock content %}

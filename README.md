@@ -2,26 +2,33 @@
 
 # 0. Setup
 Install python 3.5:
-https://www.python.org/downloads/release/python-352/
+ref: https://www.python.org/downloads/release/python-352/
 
 Install the Heroku CLI:
-https://devcenter.heroku.com/articles/getting-started-with-python#set-up
+ref: https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 
 Install Postgres:
-https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
+ref: https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
 
 Install Crispyforms:
 pip install --upgrade django-crispy-forms
 
 If Postgres complains about user on server start:
  in settings.py / DATABASES / "default", change NAME and USER to your local username. Don't commit this file!
-# Gamesite
 
-The Gamesite uses **Bootstrap** framework and **crispy form** to style the website.
+Install crispy form:
 
-http://getbootstrap.com/
+ref: http://django-crispy-forms.readthedocs.io/en/latest/install.html#installing-django-crispy-forms  
+ 
+The Gamesite uses **Bootstrap** framework for the frontend design. details on:
 
-http://django-crispy-forms.readthedocs.io/en/latest/
+ref: http://getbootstrap.com/
+
+Install social-auth-app-django for 3rd party login:
+
+`pip install social-auth-app-django`
+
+ref: https://pypi.python.org/pypi/social-auth-app-django/
 
 # 1.Running the test in local environment
     `virtualenv venv` //create a virtualenv for the app;
@@ -50,3 +57,9 @@ To kill the server (OS X):
 or  
     
     `pkill -f python`
+    
+# 2. Running the local email server to test registration emailing function:
+
+Python has a little SMTP server built-in. You can start it in a second console with this command:
+
+`python -m smtpd -n -c DebuggingServer localhost:1025`

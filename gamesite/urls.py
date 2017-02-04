@@ -27,10 +27,10 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='home'),
-    #url(r'^login/$', auth_views.login, name='login'),
     url(r'^login/$', login_view, name='login'),
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
+    url('', include('social_django.urls', namespace='social')),
     # url(r'^register/$', CreateView.as_view(
     #     template_name='registration/register.html',
     #     form_class=UserCreationForm,
@@ -40,8 +40,12 @@ urlpatterns = [
 
     url(r'^games/$', available_games, name='available_games'),
     url(r'^games/([0-9]+)/$', gameview),
-
     url(r'^test/', test),
 
 
 ]
+
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
