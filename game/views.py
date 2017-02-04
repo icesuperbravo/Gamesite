@@ -108,7 +108,7 @@ def developer_view(request):
 def developer_public_view(request, developer_id):
     """A public view of a developer's games."""
 
-    games = Game.objects.filter(creator=request.user.profile)
+    games = Game.objects.filter(creator=developer_id)
 
     return render(request, 'game/developer_public_page.html', {'id':developer_id, 'games': games})
 
