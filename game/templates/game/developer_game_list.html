@@ -1,0 +1,18 @@
+Your profile id is {{id}}
+
+<h1>Your games</h1>
+{% for g in games %}
+    <div>
+        {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
+    </div>
+
+{% if form != None %}
+<h1>Add new game</h1>
+<div>
+    <form method="post" action="">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit">
+    </form>
+</div>
+{% endif %}

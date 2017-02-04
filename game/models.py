@@ -19,6 +19,7 @@ class Game(models.Model):
     title = models.CharField(max_length=255, default="Title", unique=True)
     description = models.TextField(default='descr')
     image_url = models.URLField(blank = True)
+    creator = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='created_games')
     def set_title(self, new_title):
         self.title = new_title
         self.save()
@@ -47,6 +48,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     usertype = models.IntegerField(choices=USERTYPE_CHOICES, null=True)
     owned_games = models.ManyToManyField(Game)
+
+    def is_developer(self):
+        return (self.usertype == 1)
+
 
 
 

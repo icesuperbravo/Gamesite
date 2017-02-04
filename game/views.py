@@ -55,6 +55,7 @@ def game_buy_view(request, product_id):
         if buy_form.is_valid():
             user = request.user
             if user.is_authenticated:
+
                 user.profile.owned_games.add(game)
                 print("Successfully bought game")
             else:
@@ -66,17 +67,50 @@ def game_buy_view(request, product_id):
 
     return render(request, 'game/game_buy_view.html', {'game': game, 'buy_form': buy_form})
 
+
 def available_games(request):
     """A view of all games."""
+
     games = Game.objects.all()
-    new_game = Game()
+
+    is_developer = request.user.profile.is_developer()
+
+    return render(request, 'game/game_list.html', {'games': games, 'is_developer': is_developer})
+
+
+def developer_view(request):
+    """A view of the logged-in developer's games."""
+
+    if request.user.profile.is_developer():
+        id = request.user.profile.id
+        games = Game.objects.filter(creator=request.user.profile)
+    else:
+        print("Error")
+
     if request.method == 'POST':
         form = CreateGameForm(request.POST, request.FILES)
         if form.is_valid():
+            # profile.user = user
+            game = form.save(commit=False)
+            creator = request.user.profile
+            game.creator = creator
             form.save()
     else:
-        form = CreateGameForm(initial={'title': 'Super Django Bros.'}, instance=new_game)
-    return render(request, 'game/game_list.html', {'games': games, 'form': form})
+        if request.user.profile.is_developer():
+            new_game = Game()
+            form = CreateGameForm(initial={'title': 'Super Django Bros.'}, instance=new_game)
+        else:
+            form = None
+    return render(request, 'game/developer_game_list.html', {'id':id, 'games': games, 'form': form})
+
+
+def developer_public_view(request, developer_id):
+    """A public view of a developer's games."""
+
+    games = Game.objects.filter(creator=request.user.profile)
+
+    return render(request, 'game/developer_public_page.html', {'id':developer_id, 'games': games})
+
 
 def login_view(request):
     title ="Gamesite Login"

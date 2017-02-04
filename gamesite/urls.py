@@ -26,7 +26,7 @@ urlpatterns = [
     # url('^', include('django.contrib.auth.urls')),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home, name='home'),
+    url(r'^$', available_games, name='home'),
     url(r'^login/$', login_view, name='login'),
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^games/([0-9]+)/buy/$', game_buy_view),
     url(r'^test/', test),
 
+    url(r'^developer/$', developer_view),
+    url(r'^developer/([0-9]+)/$', developer_public_view),
 
 ]
 
