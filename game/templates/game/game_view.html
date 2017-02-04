@@ -9,7 +9,9 @@
         Description: {{game.description}}
     </div>
     <div>
-        image URL: {{game.image_url}}
+      <a href={{game.image_url}}>
+        <img src="{{game.image_url}}" alt="Game image" height="240" width="240">
+      </a>
     </div>
     <div>
         Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
