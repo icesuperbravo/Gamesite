@@ -31,7 +31,7 @@ def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
-    if (user.is_authenticated() and game.creator == request.user.profile):
+    if (request.user.is_authenticated() and game.creator == request.user.profile):
         if request.method == 'POST':
             delete_form = DeleteGameForm(request.POST, instance=game)
 
@@ -55,7 +55,7 @@ def game_buy_view(request, product_id):
 
         if buy_form.is_valid():
             user = request.user
-            if user.is_authenticated:
+            if request.user.is_authenticated:
 
                 user.profile.owned_games.add(game)
                 print("Successfully bought game")
