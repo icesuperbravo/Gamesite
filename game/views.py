@@ -26,12 +26,12 @@ def home(request):
 def about(request):
     return HttpResponse("about page")
 
-@login_required()
+
 def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
-    if (game.creator == request.user.profile):
+    if (user.is_authenticated() and game.creator == request.user.profile):
         if request.method == 'POST':
             delete_form = DeleteGameForm(request.POST, instance=game)
 
@@ -45,13 +45,13 @@ def game_view(request, product_id):
 
     return render(request, 'game/game_view.html', {'game': game, 'delete_form': delete_form})
 
+@login_required()
 def game_buy_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
     if request.method == 'POST':
         buy_form = BuyGameForm(request.POST, instance=game)
-
 
         if buy_form.is_valid():
             user = request.user
@@ -79,6 +79,7 @@ def available_games(request):
     return render(request, 'game/game_list.html', {'games': games, 'is_developer': is_developer})
 
 
+@login_required()
 def developer_view(request):
     """A view of the logged-in developer's games."""
 
@@ -91,7 +92,6 @@ def developer_view(request):
     if request.method == 'POST':
         form = CreateGameForm(request.POST, request.FILES)
         if form.is_valid():
-            # profile.user = user
             game = form.save(commit=False)
             creator = request.user.profile
             game.creator = creator
