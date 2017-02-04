@@ -10,6 +10,9 @@ ref: https://devcenter.heroku.com/articles/getting-started-with-python#set-up
 Install Postgres:
 ref: https://devcenter.heroku.com/articles/heroku-postgresql#local-setup
 
+Install Crispyforms:
+pip install --upgrade django-crispy-forms
+
 If Postgres complains about user on server start:
  in settings.py / DATABASES / "default", change NAME and USER to your local username. Don't commit this file!
 
