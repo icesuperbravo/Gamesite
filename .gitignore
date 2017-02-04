@@ -1,7 +1,7 @@
 .idea/*
 wsd-project.iml
 
-
+venv/*
 
 
 # Created by https://www.gitignore.io/api/virtualenv
