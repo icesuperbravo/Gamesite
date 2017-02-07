@@ -48,7 +48,8 @@ urlpatterns = [
 
     url(r'^payment/cancel', payment_cancel_view, name= 'payment_cancel'),
     url(r'^payment/success', payment_success_view, name= 'payment_success'),
-    url(r'^payment/error', payment_error_view, name= 'payment_success'),
+    url(r'^payment/error/([0-9]+)/$', payment_error_view, name= 'payment_error'),
+    #url(r'^payment/existed_games', payment_error_view, name= 'payment_success'),
 
 
 ]

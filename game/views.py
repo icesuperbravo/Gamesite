@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from game.models import Game, Profile
+from game.models import *
 from django.shortcuts import render_to_response,render
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
@@ -14,8 +14,9 @@ from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.utils import timezone
 from hashlib import md5
-import requests
+
 
 
 
@@ -25,6 +26,8 @@ def index(request):
 
 def about(request):
     return HttpResponse("about page")
+
+
 
 
 def game_view(request, product_id):
@@ -59,20 +62,38 @@ def game_view(request, product_id):
 def game_buy_view(request, product_id):
     """A view of buying a single game."""
     game = Game.objects.get(pk=product_id)
+    user = request.user
+    print (user)
+    buyers = Profile.objects.filter(owned_games=game)
+    print (buyers)
+    if user.profile in buyers:
+        error="The user has already bought the game!"
+        print(error)
+        return HttpResponseRedirect('/payment/error/1/')
+    else:
 
-    buy_form = BuyGameForm()
-    amount = game.price
-    print (amount)
-    pid = buy_form.fields["pid"].initial
-    sid = buy_form.fields["sid"].initial
-    secret_key = '6cd118b1432bf22942d93d784cd17084'
-    checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
-    m = md5(checksumstr.encode("ascii"))
-    # print (m)
-    checksum = m.hexdigest()
-    print (checksum)
-    new_buy_form = BuyGameForm(initial={'amount': amount, 'checksum': checksum})
-    print (new_buy_form)
+        transaction = Transaction()
+        transaction.payer = user
+        transaction.payed_game = game
+        transaction.date = timezone.now()
+        transaction.save()
+
+        buy_form = BuyGameForm()
+        amount = game.price
+        print (amount)
+        pid = transaction.id
+        sid = buy_form.fields["sid"].initial
+        secret_key = '6cd118b1432bf22942d93d784cd17084'
+        checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
+        m = md5(checksumstr.encode("ascii"))
+        # print (m)
+        checksum = m.hexdigest()
+        print (checksum)
+        new_buy_form = BuyGameForm(initial={'pid': pid, 'amount': amount, 'checksum': checksum})
+        print (new_buy_form)
+
+
+
 
 
         # user = request.user
@@ -229,20 +250,47 @@ def logout_view(request):
 def payment_cancel_view(request):
     return HttpResponse("payment failure, try again")
 
-def payment_success_view(request,pid):
-    user = request.user
+@login_required
+def payment_success_view(request):
+    print (request)
+
     if request.user.is_authenticated:
-        #game = Game.objects.filter(creator=user.profile)
-        #user.profile.owned_games.add(game)
-        print("Successfully bought game")
+        user = request.user
+        pid = request.GET.get('pid')
+        ref = request.GET.get('ref')
+        server_check = request.GET.get('checksum')
+        result = 'success'
+        secret_key = '6cd118b1432bf22942d93d784cd17084'
+        checksumstr = "pid={}&ref={}&result={}&token={}".format(pid, ref, result, secret_key)
+        m = md5(checksumstr.encode("ascii"))
+        checksum = m.hexdigest()
+
+        if checksum == server_check:
+            transaction = Transaction.objects.get(pk=pid)
+            game = transaction.payed_game
+            print (game.id)
+            user.profile.owned_games.add(game)
+            print("Successfully bought game")
+        else:
+            print ("Forbidden to buy the game!")
     else:
         print("Can't buy game when not logged in!")
     return HttpResponseRedirect('/games/')
 
 
 
-def payment_error_view(request):
-    return HttpResponse("payment error")
+def payment_error_view(request,error_type):
+
+    print(request)
+    if error_type=='0':
+        error = "Server rejected the payment!"
+        print("error0")
+    if error_type=='1':
+        error="The game has already existed in your account! Do not pay again!"
+        print("error1")
+
+
+    return render(request, "game/payment_error.html", {'error':error})
 
 @login_required()
 def test(request):

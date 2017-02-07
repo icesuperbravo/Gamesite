@@ -30,15 +30,6 @@ class Game(models.Model):
 """ TODO: HighsCore model - with fields game, score, and user """
 
 
-#class UserType(Enum):
-#    GAMER = 1
-#    DEVELOPER = 2
-
-#class UserDetails(models.Model):
-#    user = models.OneToOneField(User, on_delete=models.CASCADE)
-#    role = UserType
-
-
 class Profile(models.Model):
     USERTYPE_PLAYER = 0
     USERTYPE_DEVELOPER = 1
@@ -58,13 +49,11 @@ class Profile(models.Model):
         return self.USERTYPE_CHOICES[self.usertype][1];
 
 
+class Transaction(models.Model):
+    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payer_info')
+    payed_game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='paygame_info')
+    #price = models.DecimalField(max_digits=9, decimal_places=2)
+    date =  models.DateTimeField(auto_now=True, blank=True)
 
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+

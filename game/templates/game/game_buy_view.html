@@ -16,7 +16,7 @@
         <li>Price: {{game.price}}</li>
          
     </ul>
-     
+     <p>{{error}}</p>
     <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST"> 
         {{ new_buy_form | crispy }} 
         {% csrf_token%} 
@@ -24,6 +24,6 @@
     </form>
      
 </div> 
-{% endblock content %} 
 <!--<form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">-->     <!--<input type="hidden" name="pid" value="payment1" />-->     <!--<input type="hidden" name="sid" value="groupBest" />-->     <!--<input type="hidden" name="success_url"-->            <!--value="http://localhost:8000/payment/success" />-->     <!--<input type="hidden" name="cancel_url"-->            <!--value="http://localhost:8000/payment/cancel" />-->     <!--<input type="hidden" name="error_url"-->            <!--value="http://localhost:8000/payment/error" />-->     <!--<input type="hidden" name="checksum"-->                <!--value="ee306a1dec60d40534391106f7855434" />-->      <!--<label for="id_amount">Amount</label>-->     <!--<input type="text" id="id_amount" name="amount" value="5" />-->     <!--<input type="submit" value="Accept Payment"/>--> <!--</form>--> 
 <a href="/games/">  < Back to index </a> 
+{% endblock content %} 
