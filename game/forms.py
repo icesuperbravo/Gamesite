@@ -77,18 +77,14 @@ class ProfileForm(forms.ModelForm):
 class GameForm(ModelForm):
     class Meta:
         model = Game
+        fields = ['title', 'description', 'price', 'image_url']
 
-        fields = ['title', 'description', 'price', 'image_url', 'game_url']
 
 class DeleteGameForm(ModelForm):
     class Meta:
         model = Game
         fields = []
 
-class BuyGameForm(ModelForm):
-    class Meta:
-        model = Game
-        fields = []
 # class BuyGameForm(ModelForm):
 #     class Meta:
 #         model = Game

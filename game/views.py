@@ -93,7 +93,6 @@ def game_buy_view(request, product_id):
 @login_required()
 def game_play_view(request, product_id):
     """A view of a single game."""
-    
     game = Game.objects.get(pk=product_id)
 
     return render(request, 'game/game_play_view.html', {'game': game})
@@ -195,10 +194,10 @@ def register_view(request):
         usertype = profile_form.cleaned_data.get('usertype')
         profile.usertype = usertype
         profile.save()
-        if usertype == 1:
-            developer_group = Group.objects.get(name='developer')
-            developer_group.user_set.add(user)
-            print("user into group developer")
+        #if usertype == 1:
+        #    developer_group = Group.objects.get(name='developer')
+        #    developer_group.user_set.add(user)
+        #    print("user into group developer")
 
 # Email Validation
         subject = 'Congrats to you to become the newbie on Gamesite!'
