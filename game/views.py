@@ -74,9 +74,13 @@ def available_games(request):
 
     games = Game.objects.all()
 
-    is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
+    if request.user.is_authenticated():
+        profile = request.user.profile
+    else:
+        profile = None
+    #is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
 
-    return render(request, 'game/game_list.html', {'games': games, 'is_developer': is_developer})
+    return render(request, 'game/game_list.html', {'games': games, 'profile': profile})
 
 
 @login_required()

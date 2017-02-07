@@ -1,15 +1,35 @@
-
-
 <h1>All games</h1>
 {% for g in games %}
     <div>
         {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
     </div>
 
-{% if is_developer %}
-<div>
-    <a href="../developer">
-        Developer options ->
-    </a>
+
+{% if profile != None %}
+
+<div style="padding-top:1rem;">
+  Logged in as {{ profile.user.username }} ({{ profile.usertype_string }})
+  <br>
+
+  {% if profile.is_developer %}
+  <a href="/developer">Developer options -></a>
+  {% else %}
+  <a href=""> TODO: Link to player's owned games...</a>
+  {% endif %}
+  <br>
+  <a href="/logout">Log out -></a>
+
 </div>
+
+{% else %}
+
+<div style="margin-top:1rem;">
+  <div>
+    You are not logged in.<br>
+    <a href="/login">Login -></a><br>
+    <a href="/register">Register -></a>
+  </div>
+
+</div>
+
 {% endif %}
