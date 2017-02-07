@@ -9,7 +9,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import  UserLoginForm, UserRegisterForm, ProfileForm, BuyGameForm, CreateGameForm, DeleteGameForm
+from .forms import  UserLoginForm, UserRegisterForm, ProfileForm, BuyGameForm, GameForm, DeleteGameForm
 from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
@@ -33,17 +33,27 @@ def game_view(request, product_id):
 
     if (request.user.is_authenticated() and game.creator == request.user.profile):
         if request.method == 'POST':
-            delete_form = DeleteGameForm(request.POST, instance=game)
+            if 'delete_submit' in request.POST:
+                delete_form = DeleteGameForm(request.POST, instance=game)
 
-            if delete_form.is_valid():
-                game.delete()
-                return HttpResponseRedirect('/games/')
+                if delete_form.is_valid():
+                    game.delete()
+                    return HttpResponseRedirect('/games/')
+            elif 'edit_submit' in request.POST:
+                edit_form = GameForm(request.POST, instance=game)
+
+                if edit_form.is_valid():
+                    edit_form.save()
+                    return HttpResponseRedirect('/games/')
+
         else:
+            edit_form = GameForm(instance=game)
             delete_form = DeleteGameForm(instance=game)
     else:
         delete_form = None
+        edit_form = None
 
-    return render(request, 'game/game_view.html', {'game': game, 'delete_form': delete_form})
+    return render(request, 'game/game_view.html', {'game': game, 'edit_form': edit_form, 'delete_form': delete_form})
 
 @login_required()
 def game_buy_view(request, product_id):
@@ -86,9 +96,13 @@ def available_games(request):
 
     games = Game.objects.all()
 
-    is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
+    if request.user.is_authenticated():
+        profile = request.user.profile
+    else:
+        profile = None
+    #is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
 
-    return render(request, 'game/game_list.html', {'games': games, 'is_developer': is_developer})
+    return render(request, 'game/game_list.html', {'games': games, 'profile': profile})
 
 
 @login_required()
@@ -102,7 +116,7 @@ def developer_view(request):
         print("Error")
 
     if request.method == 'POST':
-        form = CreateGameForm(request.POST, request.FILES)
+        form = GameForm(request.POST, request.FILES)
         if form.is_valid():
             game = form.save(commit=False)
             creator = request.user.profile
@@ -111,7 +125,7 @@ def developer_view(request):
     else:
         if request.user.profile.is_developer():
             new_game = Game()
-            form = CreateGameForm(initial={'title': 'Super Django Bros.'}, instance=new_game)
+            form = GameForm(initial={'title': 'Super Django Bros.'}, instance=new_game)
         else:
             form = None
     return render(request, 'game/developer_game_list.html', {'id':id, 'games': games, 'form': form})
@@ -120,7 +134,7 @@ def developer_view(request):
 def developer_public_view(request, developer_id):
     """A public view of a developer's games."""
 
-    games = Game.objects.filter(creator=request.user.profile)
+    games = Game.objects.filter(creator=developer_id)
 
     return render(request, 'game/developer_public_page.html', {'id':developer_id, 'games': games})
 

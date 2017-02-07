@@ -54,6 +54,9 @@ class Profile(models.Model):
     def is_developer(self):
         return (self.usertype == 1)
 
+    def usertype_string(self):
+        return self.USERTYPE_CHOICES[self.usertype][1];
+
 
 
 
