@@ -1,22 +1,35 @@
-<h1>
-    Game Title: {{game.title}}
-</h1>
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+<div class='col-sm-6 col-sm-offset-3'>
+    <h1>
+        Game Title: {{game.title}}
+    </h1>
+    <ul>
+        <li>id: {{game.id}}</li>
+        <li>Description: {{game.description}}</li>
+        <li>
+            <a href={{game.image_url}}>
+                <img src="{{game.image_url}}" alt="Game image" height="240" width="240">
+            </a>
+        </li>
+        <li>
+            Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
+        </li>
+        <li>Price: {{game.price}}</li>
+    </ul>
+
+{% if edit_form != None %}
 <div>
-    <div>
-        id: {{game.id}}
-    </div>
-    <div>
-        Description: {{game.description}}
-    </div>
-    <div>
-      <a href={{game.image_url}}>
-        <img src="{{game.image_url}}" alt="Game image" height="240" width="240">
-      </a>
-    </div>
-    <div>
-        Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
-    </div>
+    <h3>Edit game</h3>
+    <form method="post" action="">
+        {{ edit_form }}
+        {% csrf_token %}
+        <input type="submit" name="edit_submit" value="Save">
+    </form>
 </div>
+{% endif %}
 
 {% if delete_form != None %}
 <div>
@@ -24,7 +37,7 @@
     <form method="post" action="">
         {{ delete_form }}
         {% csrf_token %}
-        <input type="submit" value="Delete">
+      <input type="submit" name="delete_submit" value="Delete">
     </form>
 </div>
 {% endif %}
@@ -45,4 +58,6 @@
     <a href="/games/">
         < Back to index
     </a>
+
 </div>
+{% endblock content %} 

@@ -47,6 +47,11 @@ urlpatterns = [
     url(r'^developer/$', developer_view),
     url(r'^developer/([0-9]+)/$', developer_public_view),
 
+    url(r'^payment/cancel', payment_cancel_view, name= 'payment_cancel'),
+    url(r'^payment/success', payment_success_view, name= 'payment_success'),
+    url(r'^payment/error', payment_error_view, name= 'payment_success'),
+
+
 ]
 
 
