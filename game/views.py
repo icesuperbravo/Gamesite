@@ -125,7 +125,7 @@ def developer_view(request):
     else:
         if request.user.profile.is_developer():
             new_game = Game()
-            form = GameForm(initial={'title': 'Super Django Bros.'}, instance=new_game)
+            form = GameForm(initial={'title': 'Super Django Bros.', 'price': 0.0}, instance=new_game)
         else:
             form = None
     return render(request, 'game/developer_game_list.html', {'id':id, 'games': games, 'form': form})

@@ -77,7 +77,7 @@ class ProfileForm(forms.ModelForm):
 class GameForm(ModelForm):
     class Meta:
         model = Game
-        fields = ['title', 'description', 'image_url']
+        fields = ['title', 'description', 'price', 'image_url']
 
 
 class DeleteGameForm(ModelForm):
@@ -113,4 +113,3 @@ class BuyGameForm(forms.Form):
     #     print (checksum)
     #     print("new clean checksum method!")
     #     return checksum
-
