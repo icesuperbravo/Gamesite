@@ -229,12 +229,13 @@ def logout_view(request):
 def payment_cancel_view(request):
     return HttpResponse("payment failure, try again")
 
-def payment_success_view(request,pid):
+def payment_success_view(request):
+    pid = request.GET["pid"]
     user = request.user
     if request.user.is_authenticated:
         #game = Game.objects.filter(creator=user.profile)
         #user.profile.owned_games.add(game)
-        print("Successfully bought game")
+        print("Successfully bought game %s" % pid)
     else:
         print("Can't buy game when not logged in!")
     return HttpResponseRedirect('/games/')
