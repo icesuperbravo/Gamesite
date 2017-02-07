@@ -74,7 +74,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('usertype',)
 
-class CreateGameForm(ModelForm):
+class GameForm(ModelForm):
     class Meta:
         model = Game
         fields = ['title', 'description', 'image_url']

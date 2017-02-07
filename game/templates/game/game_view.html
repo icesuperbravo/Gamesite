@@ -18,13 +18,24 @@
     </div>
 </div>
 
+{% if edit_form != None %}
+<div>
+    <h3>Edit game</h3>
+    <form method="post" action="">
+        {{ edit_form }}
+        {% csrf_token %}
+        <input type="submit" name="edit_submit" value="Save">
+    </form>
+</div>
+{% endif %}
+
 {% if delete_form != None %}
 <div>
     <h3>Delete game</h3>
     <form method="post" action="">
         {{ delete_form }}
         {% csrf_token %}
-        <input type="submit" value="Delete">
+      <input type="submit" name="delete_submit" value="Delete">
     </form>
 </div>
 {% endif %}
