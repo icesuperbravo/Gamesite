@@ -1,4 +1,8 @@
-Your profile id is {{id}}
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+<p>Your profile id is {{id}}</p>
 
 <h1>Your games</h1>
 {% for g in games %}
@@ -10,9 +14,10 @@ Your profile id is {{id}}
 <h1>Add new game</h1>
 <div>
     <form method="post" action="">
-        {{ form }}
+        {{ form |crispy }}
         {% csrf_token %}
         <input type="submit">
     </form>
 </div>
 {% endif %}
+{% endblock content %} 

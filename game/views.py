@@ -14,13 +14,13 @@ from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib import messages
+from hashlib import md5
+import requests
+
 
 
 def index(request):
     return HttpResponse("Default page when logged in. As a player, see the overview of your profile, games owned, and highscores.  ")
-
-def home(request):
-  return HttpResponse("Default page when logged in. As a player, see the overview of your profile, games owned, and highscores.  ")
 
 
 def about(request):
@@ -47,26 +47,38 @@ def game_view(request, product_id):
 
 @login_required()
 def game_buy_view(request, product_id):
-    """A view of a single game."""
+    """A view of buying a single game."""
     game = Game.objects.get(pk=product_id)
 
-    if request.method == 'POST':
-        buy_form = BuyGameForm(request.POST, instance=game)
+    buy_form = BuyGameForm()
+    amount = game.price
+    print (amount)
+    pid = buy_form.fields["pid"].initial
+    sid = buy_form.fields["sid"].initial
+    secret_key = '6cd118b1432bf22942d93d784cd17084'
+    checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
+    m = md5(checksumstr.encode("ascii"))
+    # print (m)
+    checksum = m.hexdigest()
+    print (checksum)
+    new_buy_form = BuyGameForm(initial={'amount': amount, 'checksum': checksum})
+    print (new_buy_form)
 
-        if buy_form.is_valid():
-            user = request.user
-            if request.user.is_authenticated:
 
-                user.profile.owned_games.add(game)
-                print("Successfully bought game")
-            else:
-                print("Can't buy game when not logged in!")
-            return HttpResponseRedirect('/games/')
+        # user = request.user
+        # if request.user.is_authenticated:
+        #     user.profile.owned_games.add(game)
+        #     print("Successfully bought game")
+        # else:
+        #     print("Can't buy game when not logged in!")
+        # return HttpResponseRedirect('/games/')
+    # else:
+    #     print ('buy form not valid')
 
-    else:
-        buy_form = DeleteGameForm(instance=game)
+    # else:
+    #     buy_form = DeleteGameForm(instance=game)
 
-    return render(request, 'game/game_buy_view.html', {'game': game, 'buy_form': buy_form})
+    return render(request, 'game/game_buy_view.html', {'game': game, 'new_buy_form': new_buy_form})
 
 
 def available_games(request):
@@ -129,6 +141,7 @@ def login_view(request):
     #         login(request, user)
     #         return HttpResponseRedirect("/")
     form = UserLoginForm(request.POST or None)
+    print (form)
     if form.is_valid():
             print("Login form is valid")
             username = form.cleaned_data.get("username")
@@ -199,8 +212,23 @@ def logout_view(request):
     logout(request)
     return render(request, "registration/logout.html", {})
 
+def payment_cancel_view(request):
+    return HttpResponse("payment failure, try again")
+
+def payment_success_view(request,pid):
+    user = request.user
+    if request.user.is_authenticated:
+        #game = Game.objects.filter(creator=user.profile)
+        #user.profile.owned_games.add(game)
+        print("Successfully bought game")
+    else:
+        print("Can't buy game when not logged in!")
+    return HttpResponseRedirect('/games/')
 
 
+
+def payment_error_view(request):
+    return HttpResponse("payment error")
 
 @login_required()
 def test(request):

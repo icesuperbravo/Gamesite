@@ -15,8 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Game',
             fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('title', models.CharField(unique=True, default='Title', max_length=255)),
+                ('id', models.AutoField(primary_key=True, serialize=False)),
+                ('title', models.CharField(default='Title', max_length=255, unique=True)),
                 ('description', models.TextField(default='descr')),
                 ('image_url', models.URLField(blank=True)),
             ],
@@ -24,10 +24,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Profile',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, verbose_name='ID', serialize=False)),
                 ('usertype', models.IntegerField(null=True, choices=[(0, 'Player'), (1, 'Developer')])),
                 ('owned_games', models.ManyToManyField(to='game.Game')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, related_name='profile')),
             ],
+        ),
+        migrations.AddField(
+            model_name='game',
+            name='creator',
+            field=models.ForeignKey(to='game.Profile', related_name='created_games'),
         ),
     ]

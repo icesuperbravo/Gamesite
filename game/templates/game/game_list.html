@@ -3,7 +3,7 @@
 <h1>All games</h1>
 {% for g in games %}
     <div>
-        {{g.id}}<a href="{{ g.id }}/"> {{g.title}} </a> {% endfor %}
+        {{g.id}}<a href="games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
     </div>
 
 {% if is_developer %}

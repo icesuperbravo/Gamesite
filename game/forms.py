@@ -8,7 +8,7 @@ from django.contrib.auth import (
 from .models import Profile, Game
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-
+from hashlib import md5
 
 #User = get_user_model()
 #print (User)
@@ -77,7 +77,7 @@ class ProfileForm(forms.ModelForm):
 class CreateGameForm(ModelForm):
     class Meta:
         model = Game
-        fields = ['title', 'description', 'image_url']
+        fields = ['title', 'description', 'image_url', 'price']
 
 
 class DeleteGameForm(ModelForm):
@@ -85,7 +85,32 @@ class DeleteGameForm(ModelForm):
         model = Game
         fields = []
 
-class BuyGameForm(ModelForm):
-    class Meta:
-        model = Game
-        fields = []
+# class BuyGameForm(ModelForm):
+#     class Meta:
+#         model = Game
+#         fields = []
+
+class BuyGameForm(forms.Form):
+    amount = forms.DecimalField(widget=forms.HiddenInput(), required= False, initial = 15)
+    pid = forms.CharField(widget=forms.HiddenInput(), initial='mytestsale' )
+    sid = forms.CharField(widget=forms.HiddenInput(), initial='tester')
+    success_url = forms.URLField(widget=forms.HiddenInput(), initial='http://localhost:8000/payment/success')
+    cancel_url = forms.URLField(widget=forms.HiddenInput(), initial='http://localhost:8000/payment/cancel')
+    error_url = forms.URLField(widget=forms.HiddenInput(), initial='http://localhost:8000/payment/error')
+    checksum = forms.CharField(widget=forms.HiddenInput(),required= False)
+
+
+    # def clean_checksum(self):
+    #     amount = self.cleaned_data.get('amount')
+    #     pid = self.cleaned_data.get('pid')
+    #     sid = self.cleaned_data.get('sid')
+    #     secret_key = '6cd118b1432bf22942d93d784cd17084'
+    #     checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
+    #     print (checksumstr)
+    #     m = md5(checksumstr.encode("ascii"))
+    #     print (m)
+    #     checksum = m.hexdigest()
+    #     print (checksum)
+    #     print("new clean checksum method!")
+    #     return checksum
+
