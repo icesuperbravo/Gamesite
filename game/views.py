@@ -68,6 +68,14 @@ def game_buy_view(request, product_id):
 
     return render(request, 'game/game_buy_view.html', {'game': game, 'buy_form': buy_form})
 
+@login_required()
+def game_play_view(request, product_id):
+    """A view of a single game."""
+    
+    game = Game.objects.get(pk=product_id)
+
+    return render(request, 'game/game_play_view.html', {'game': game})
+
 
 def available_games(request):
     """A view of all games."""

@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^games/$', available_games, name='available_games'),
     url(r'^games/([0-9]+)/$', game_view),
     url(r'^games/([0-9]+)/buy/$', game_buy_view),
+    url(r'^games/([0-9]+)/play/$', game_play_view),
     url(r'^test/', test),
 
     url(r'^developer/$', developer_view),

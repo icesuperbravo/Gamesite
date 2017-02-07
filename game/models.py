@@ -19,6 +19,7 @@ class Game(models.Model):
     title = models.CharField(max_length=255, default="Title", unique=True)
     description = models.TextField(default='descr')
     image_url = models.URLField(blank = True)
+    game_url = models.URLField(unique = True)
     creator = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='created_games')
     def set_title(self, new_title):
         self.title = new_title

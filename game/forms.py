@@ -77,7 +77,7 @@ class ProfileForm(forms.ModelForm):
 class CreateGameForm(ModelForm):
     class Meta:
         model = Game
-        fields = ['title', 'description', 'image_url']
+        fields = ['title', 'description', 'image_url', 'game_url']
 
 
 class DeleteGameForm(ModelForm):
