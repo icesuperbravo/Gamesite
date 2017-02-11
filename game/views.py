@@ -255,8 +255,9 @@ def register_view(request):
 
 
 def logout_view(request):
+    username= request.user.username
     logout(request)
-    return render(request, "registration/logout.html", {})
+    return render(request, "registration/logout.html", {"username":username})
 
 def payment_cancel_view(request):
     return HttpResponse("payment failure, try again")
@@ -282,12 +283,13 @@ def payment_success_view(request):
             print (game.id)
             user.profile.owned_games.add(game)
             print("Successfully bought game")
+            return HttpResponseRedirect('/player')
         else:
             print ("Forbidden to buy the game!")
             return HttpResponseRedirect('/payment/error/2/')
     else:
         print("Can't buy game when not logged in!")
-    return HttpResponseRedirect('/games/')
+
 
 
 

@@ -19,7 +19,7 @@
         </li>
         <li>Price: {{game.price}}</li>
     </ul>
-</div>
+
 
 <div>
   <h3>Highscores</h3>
@@ -36,7 +36,7 @@
 <div>
     <h3>Edit game</h3>
     <form method="post" action="">
-        {{ edit_form }}
+        {{ edit_form |crispy}}
         {% csrf_token %}
         <input type="submit" name="edit_submit" value="Save">
     </form>
@@ -53,7 +53,9 @@
     </form>
 </div>
 {% endif %}
+</div>
 
+<div class='col-sm-9 col-sm-offset-9'>
 <div>
     <a href="./buy">
         < Buy game
@@ -70,6 +72,7 @@
     <a href="/games/">
         < Back to index
     </a>
+</div>
 
 </div>
 {% endblock content %} 
