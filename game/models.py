@@ -59,13 +59,10 @@ class Profile(models.Model):
         return self.USERTYPE_CHOICES[self.usertype][1];
 
 
+class Highscore(models.Model):
+    player = models.ForeignKey('Profile')
+    game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='highscores')
+    value = models.IntegerField(null=False)
 
-
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
+    class Meta:
+        unique_together = (("player", "game"),)

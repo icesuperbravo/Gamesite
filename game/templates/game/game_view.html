@@ -19,6 +19,18 @@
         </li>
         <li>Price: {{game.price}}</li>
     </ul>
+</div>
+
+<div>
+  <h3>Highscores</h3>
+  <ul>
+  {% for hs in game.highscores.all %}
+      <li>
+        {{hs.player.user.username}} - {{hs.value}}
+      </li>
+  {% endfor %}
+  </ul>
+</div>
 
 {% if edit_form != None %}
 <div>
