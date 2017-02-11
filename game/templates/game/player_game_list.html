@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+<p>Your profile id is {{id}}</p>
+
+<h1>Games that you have bought: </h1>
+{% for g in games %}
+<div>
+    {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
+</div>
+
+{% endblock content %} 

@@ -1,43 +1,42 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block content %}
-
-<h1>All games</h1>
-{% for g in games %}
-    <div>
-        {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
-    </div>
-
-
-{% if profile != None %}
-
-<div style="padding-top:1rem;">
-  Logged in as {{ profile.user.username }} ({{ profile.usertype_string }})
-  <br>
-
-  {% if profile.is_developer %}
-  <a href="/developer">Developer options -></a>
-  {% else %}
-  <a href=""> TODO: Link to player's owned games...</a>
-  {% endif %}
-  <br>
-  <a href="/logout">Log out -></a>
-
-</div>
-
-{% else %}
-
-<div style="margin-top:1rem;">
+{% block content %} 
+<div class='col-sm-6 col-sm-offset-3'>
+  <h1>Game Category</h1>
+  {% for g in games %}
   <div>
-    You are not logged in.<br>
-    <a href="/login">Login -></a><br>
-    <a href="/register">Register -></a>
+    {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
   </div>
 
+
+  {% if profile != None %}
+
+  <div style="padding-top:1rem;">
+    Logged in as {{ profile.user.username }} ({{ profile.usertype_string }})
+    <br>
+    {% if profile.is_developer %}
+    <a href="/developer">Developer options -></a>
+    {% else %}
+    <a href="/player"> Player options -></a>
+    {% endif %}
+    <br>
+    <a href="/logout">Log out -></a>
+
+  </div>
+
+  {% else %}
+
+  <div style="margin-top:1rem;">
+    <div>
+      You are not logged in.<br>
+      <a href="/login">Login -></a><br>
+      <a href="/register">Register -></a>
+    </div>
+
+  </div>
+
+  {% endif %}
+
 </div>
-
-{% endif %}
-
-
-{% endblock content %}
+{% endblock content %} 

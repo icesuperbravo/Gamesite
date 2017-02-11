@@ -43,6 +43,7 @@ class Profile(models.Model):
     owned_games = models.ManyToManyField(Game)
 
 
+
     def is_developer(self):
         return (self.usertype == 1)
 
@@ -53,7 +54,7 @@ class Profile(models.Model):
 class Transaction(models.Model):
     payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payer_info')
     payed_game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='paygame_info')
-    #price = models.DecimalField(max_digits=9, decimal_places=2)
+    price = models.DecimalField(max_digits=9, decimal_places=2)
     date =  models.DateTimeField(auto_now=True, blank=True)
 
 

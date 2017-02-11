@@ -31,11 +31,6 @@ urlpatterns = [
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url('', include('social_django.urls', namespace='social')),
-    # url(r'^register/$', CreateView.as_view(
-    #     template_name='registration/register.html',
-    #     form_class=UserCreationForm,
-    #     success_url='home'
-    # )),
 
 
     url(r'^games/$', available_games, name='available_games'),
@@ -46,10 +41,11 @@ urlpatterns = [
 
     url(r'^developer/$', developer_view),
     url(r'^developer/([0-9]+)/$', developer_public_view),
+    url(r'^player/$', player_view),
 
     url(r'^payment/cancel', payment_cancel_view, name= 'payment_cancel'),
     url(r'^payment/success', payment_success_view, name= 'payment_success'),
-    url(r'^payment/error/([0-9]+)/$', payment_error_view, name= 'payment_error'),
+    url(r'^payment/error/([0-9]{1})/$', payment_error_view, name= 'payment_error'),
     #url(r'^payment/existed_games', payment_error_view, name= 'payment_success'),
 
 

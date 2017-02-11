@@ -75,6 +75,7 @@ def game_buy_view(request, product_id):
         transaction = Transaction()
         transaction.payer = user
         transaction.payed_game = game
+        transaction.price = game.price
         transaction.date = timezone.now()
         transaction.save()
 
@@ -91,10 +92,6 @@ def game_buy_view(request, product_id):
         print (checksum)
         new_buy_form = BuyGameForm(initial={'pid': pid, 'amount': amount, 'checksum': checksum})
         print (new_buy_form)
-
-
-
-
 
         # user = request.user
         # if request.user.is_authenticated:
@@ -165,6 +162,13 @@ def developer_public_view(request, developer_id):
     games = Game.objects.filter(creator=developer_id)
 
     return render(request, 'game/developer_public_page.html', {'id':developer_id, 'games': games})
+
+@login_required
+def player_view(request):
+    if not request.user.profile.is_developer():
+        id = request.user.profile.id
+        games =request.user.profile.owned_games.all()
+    return render(request, 'game/player_game_list.html', {'id':id, 'games': games})
 
 
 def login_view(request):
@@ -280,6 +284,7 @@ def payment_success_view(request):
             print("Successfully bought game")
         else:
             print ("Forbidden to buy the game!")
+            return HttpResponseRedirect('/payment/error/2/')
     else:
         print("Can't buy game when not logged in!")
     return HttpResponseRedirect('/games/')
@@ -288,14 +293,15 @@ def payment_success_view(request):
 
 def payment_error_view(request,error_type):
 
-    print(request)
+
     if error_type=='0':
         error = "Server rejected the payment!"
         print("error0")
     if error_type=='1':
         error="The game has already existed in your account! Do not pay again!"
         print("error1")
-
+    if error_type=='2':
+        error="Dangerous! Forbidden to operate the game! "
 
     return render(request, "game/payment_error.html", {'error':error})
 
