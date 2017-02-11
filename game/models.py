@@ -58,4 +58,12 @@ class Transaction(models.Model):
     date =  models.DateTimeField(auto_now=True, blank=True)
 
 
+class Highscore(models.Model):
+    player = models.ForeignKey('Profile')
+    game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='highscores')
+    value = models.IntegerField(null=False)
+
+    class Meta:
+        unique_together = (("player", "game"),)
+
 
