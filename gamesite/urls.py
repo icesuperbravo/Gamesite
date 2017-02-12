@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', available_games, name='home'),
     url(r'^login/$', login_view, name='login'),
+    url(r'^register/3rd_complete', third_party_view, name='thrid_party'),
     url(r'^register/$', register_view, name='register'),
     url(r'^logout/$', logout_view, name='logout'),
     url('', include('social_django.urls', namespace='social')),
@@ -54,4 +55,4 @@ urlpatterns = [
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'register'

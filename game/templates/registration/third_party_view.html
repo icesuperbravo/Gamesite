@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class='col-sm-6 col-sm-offset-3'>
+    <p>Hello, {{user.username}}!</p>
+    <p>Enjoy the time in Gamesite! This is the first time that you log in our service. In order to finish your log-in, please complete your profile!</p>
+
+    <hr/>
+
+    <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+        {{ profile_form|crispy }}
+        <input type='submit' class='btn btn-default' value='complete' />
+    </form>
+</div>
+{% endblock content %}

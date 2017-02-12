@@ -122,12 +122,31 @@ def available_games(request):
     games = Game.objects.all()
 
     if request.user.is_authenticated():
-        profile = request.user.profile
+        profile = None
+        user=request.user
+        try:
+            profile = user.profile;
+        except Profile.DoesNotExist:
+           return HttpResponseRedirect("/register/3rd_complete")
     else:
         profile = None
     #is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
 
     return render(request, 'game/game_list.html', {'games': games, 'profile': profile})
+
+def third_party_view(request):
+    profile_form = ProfileForm(request.POST or None)
+    user=request.user
+    print (profile_form)
+    if  profile_form.is_valid():
+        print("Forms are valid")
+        profile = Profile()
+        profile.user = request.user
+        usertype = profile_form.cleaned_data.get('usertype')
+        profile.usertype = usertype
+        profile.save()
+        return HttpResponseRedirect("/")
+    return render(request, 'registration/third_party_view.html', {'profile_form': profile_form,'user':user})
 
 
 @login_required()
@@ -187,14 +206,15 @@ def login_view(request):
     #         login(request, user)
     #         return HttpResponseRedirect("/")
     form = UserLoginForm(request.POST or None)
+
     print (form)
     if form.is_valid():
-            print("Login form is valid")
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return HttpResponseRedirect("/")
+        print("Login form is valid")
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return HttpResponseRedirect("/")
     else:
         print("Login form not valid")
 
