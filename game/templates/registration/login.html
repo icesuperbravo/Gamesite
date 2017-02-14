@@ -13,8 +13,17 @@
         {{ form|crispy }}
         <input type='submit' class='btn btn-default' value='login' />
     </form>
-    <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-    <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+
+    <div>
+      <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+    </div>
+    <div>
+      <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
+    </div>
+    <div>
+      <a href="/register/">Register</a>
+    </div>
+
 
 </div>
 {% endblock content %}
