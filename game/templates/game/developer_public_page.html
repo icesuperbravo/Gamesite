@@ -1,11 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
 <h1>Games created by {{name}} (developer id: {{id}})</h1>
 {% for g in games %}
     <div>
         {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
     </div>
 
-<div>
+<div style="margin-top: 1rem">
     <a href="/games/">
         < Back to index
     </a>
 </div>
+
+
+{% endblock content %}

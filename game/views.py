@@ -41,13 +41,13 @@ def game_view(request, product_id):
 
                 if delete_form.is_valid():
                     game.delete()
-                    return HttpResponseRedirect('/games/')
+                    return HttpResponseRedirect('/developer/')
             elif 'edit_submit' in request.POST:
                 edit_form = GameForm(request.POST, instance=game)
 
                 if edit_form.is_valid():
                     edit_form.save()
-                    return HttpResponseRedirect('/games/')
+                    return HttpResponseRedirect('')
 
         else:
             edit_form = GameForm(instance=game)

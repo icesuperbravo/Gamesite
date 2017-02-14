@@ -5,9 +5,17 @@
 <p>Your profile id is {{id}}</p>
 
 <h1>Games that you have bought: </h1>
+
 {% for g in games %}
 <div>
-    {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a>{% endfor %}
+    {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a>
+</div>
+{% endfor %}
+
+<div style="margin-top: 1rem">
+  <a href="/games/" style="margin-top: 1rem">
+      < Back to index
+  </a>
 </div>
 
-{% endblock content %} 
+{% endblock content %}
