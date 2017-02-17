@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+<body>
 <h1>
     Game Title: {{game.title}}
 </h1>
@@ -12,10 +15,9 @@
         image URL: {{game.image_url}}
     </div>
     <div id="game">
-      <iframe src= "{{game.game_url}}" height="540" width="960"></iframe>
+      <iframe src= "{{game.game_url}}" id="frame"></iframe>
     </div>
 </div>
-
 <div>
     <h3>Play</h3>
 </div>
@@ -25,3 +27,36 @@
       < Back to index
   </a>
 </div>
+
+<script>
+// Message receiver
+window.addEventListener("message", function receiveMessage(e){
+  if (e.data.messageType === "SCORE"){
+    // todo: register e.data.score
+  } else if (e.data.messageType === "SAVE"){
+    // todo: save e.data.gameState
+  } else if (e.data.messageType === "LOAD_REQUEST"){
+    // todo: send LOAD message with saved gameState
+    //
+    var msg = {
+      messageType:"LOAD",
+      // example gameState:
+      gameState: {
+        playerItems: [
+          "Sword",
+          "Wizard Hat"
+        ],
+        score: 506.0 // Float
+      }
+    }
+    document.getElementById("frame").contentWindow.postMessage(msg,document.getElementById("frame").src)
+  } else if (e.data.messageType === "SETTING")
+    // sets iFrame height and width according to e.data.options.height and e.data.options.width
+    document.getElementById("frame").height = e.data.options.height;
+    document.getElementById("frame").width = e.data.options.width;
+}, false);
+
+</script>
+<noscript>Sorry, JavaScript doesn't work!</noscript>
+</body>
+</html>
