@@ -34,6 +34,8 @@ def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
+    topscores = sorted(game.saves.all(), key=lambda x: x.highscore, reverse=True)
+
     if (request.user.is_authenticated() and game.creator == request.user.profile):
         if request.method == 'POST':
             if 'delete_submit' in request.POST:
@@ -56,7 +58,7 @@ def game_view(request, product_id):
         delete_form = None
         edit_form = None
 
-    return render(request, 'game/game_view.html', {'game': game, 'edit_form': edit_form, 'delete_form': delete_form})
+    return render(request, 'game/game_view.html', {'game': game, 'topscores':topscores, 'edit_form': edit_form, 'delete_form': delete_form})
 
 @login_required()
 def game_buy_view(request, product_id):

@@ -24,13 +24,13 @@
 
 <div>
   <h3>Highscores</h3>
-  <ul>
-  {% for save in game.saves.all %}
+  <ol>
+  {% for save in topscores %}
       <li>
         {{save.player.user.username}} - {{save.highscore}}
       </li>
   {% endfor %}
-  </ul>
+</ol>
 </div>
 
 {% if edit_form != None %}

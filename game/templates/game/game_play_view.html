@@ -16,6 +16,10 @@
         </ul>
         <iframe style="margin-bottom: 40px" src="{{game.game_url}}" height="600" width="600"></iframe>
 
+        <form method="post" id="saveForm" action="">
+            {{ save_form }}
+            {% csrf_token %}
+        </form>
     </div>
     <script>
         // Message receiver
@@ -51,4 +55,3 @@
     <noscript>Sorry, JavaScript doesn't work!</noscript>
 </div>
 {% endblock content %}
-
