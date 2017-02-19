@@ -102,17 +102,22 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 
 
 # Database PostgreSQL
+# DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.postgresql_psycopg2",
+#        "NAME": "",
+#        "USER": "",
+#        "PASSWORD": "",
+#        "HOST": "localhost",
+#        "PORT": "5432",
+#    }
+#}
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "icesuperbravo",
-        "USER": "icesuperbravo",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "5432",
+    "ENGINE": "django.db.backends.postgresql_psycopg2",
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -142,8 +147,8 @@ USE_TZ = True
 
 
 # Update database configuration with $DATABASE_URL.
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+#db_from_env = dj_database_url.config()
+#DATABASES['default'].update(db_from_env)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
