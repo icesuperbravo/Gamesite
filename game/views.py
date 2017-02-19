@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from game.models import *
 from django.shortcuts import render_to_response,render
 from django.core.context_processors import csrf
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import (
     authenticate,
@@ -9,25 +9,22 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import *
 from django.contrib.auth.models import Group
 from django.conf import settings
+
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import timezone
 from hashlib import md5
 import requests
 
+from game.models import *
+from .forms import *
 
-
-def index(request):
-    return HttpResponse("Default page when logged in. As a player, see the overview of your profile, games owned, and highscores.  ")
 
 
 def about(request):
     return HttpResponse("about page")
-
-
 
 
 def game_view(request, product_id):
@@ -53,29 +50,23 @@ def game_view(request, product_id):
                 if edit_form.is_valid():
                     edit_form.save()
                     return HttpResponseRedirect('')
-
         else:
             edit_form = GameForm(instance=game)
             delete_form = DeleteGameForm(instance=game)
     else:
         delete_form = None
         edit_form = None
-
     return render(request, 'game/game_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores, 'edit_form': edit_form, 'delete_form': delete_form})
+
 
 @login_required()
 def game_buy_view(request, product_id):
-    """A view of buying a single game."""
+    """A view for buying a game."""
     game = Game.objects.get(pk=product_id)
     user = request.user
     print (user)
     owned_games = user.profile.owned_games
     print (owned_games)
-    # if owned_games != None:
-    #     error="The user has already bought the game!"
-    #     print(error)
-    #     return HttpResponseRedirect('/payment/error/1/')
-    # else:
 
     transaction = Transaction()
     transaction.payer = user
@@ -98,12 +89,12 @@ def game_buy_view(request, product_id):
     new_buy_form = BuyGameForm(initial={'pid': pid, 'amount': amount, 'checksum': checksum})
     print (new_buy_form)
 
-
     return render(request, 'game/game_buy_view.html', {'game': game, 'new_buy_form': new_buy_form})
+
 
 @login_required()
 def game_play_view(request, product_id):
-    """A view of a single game."""
+    """View where gameplay happens."""
     game = Game.objects.get(pk=product_id)
     player = request.user.profile
 
@@ -132,7 +123,7 @@ def game_play_view(request, product_id):
 
 
 def available_games(request):
-    """A view of all games."""
+    """A view of all games in the shop."""
 
     games = Game.objects.all()
 
@@ -145,14 +136,14 @@ def available_games(request):
            return HttpResponseRedirect("/register/3rd_complete")
     else:
         profile = None
-    #is_developer = request.user.is_authenticated() and request.user.profile.is_developer()
 
     return render(request, 'game/game_list.html', {'games': games, 'profile': profile})
+
 
 def third_party_view(request):
     profile_form = ProfileForm(request.POST or None)
     user=request.user
-    print (profile_form)
+
     if  profile_form.is_valid():
         print("Forms are valid")
         profile = Profile()
@@ -198,6 +189,7 @@ def developer_public_view(request, developer_id):
 
     return render(request, 'game/developer_public_page.html', {'developer':developer, 'games': games})
 
+
 @login_required
 def player_view(request):
     profile = request.user.profile
@@ -206,19 +198,6 @@ def player_view(request):
 
 
 def login_view(request):
-
-    # form = UserLoginForm()
-    # if request.method == 'GET':
-    #     print('GET request')
-    #     return render(request, "registration/form.html", {"form":form, "title":title})
-    # if request.method == 'POST':
-    #     if form.is_valid():
-    #         print("Login form is valid")
-    #         username = form.cleaned_data.get("username")
-    #         password = form.cleaned_data.get('password')
-    #         user = authenticate(username=username, password=password)
-    #         login(request, user)
-    #         return HttpResponseRedirect("/")
     form = UserLoginForm(request.POST or None)
 
     print (form)
@@ -236,11 +215,10 @@ def login_view(request):
 
 
 def register_view(request):
-    #print(request.user.is_authenticated())
-
     user_form = UserRegisterForm(request.POST or None)
     profile_form = ProfileForm(request.POST or None)
     print (profile_form)
+
     if user_form.is_valid() and profile_form.is_valid():
         print("Forms are valid")
         user = user_form.save(commit=False)
@@ -252,12 +230,8 @@ def register_view(request):
         usertype = profile_form.cleaned_data.get('usertype')
         profile.usertype = usertype
         profile.save()
-        #if usertype == 1:
-        #    developer_group = Group.objects.get(name='developer')
-        #    developer_group.user_set.add(user)
-        #    print("user into group developer")
 
-# Email Validation
+        # Send email to newly registered member
         subject = 'Congrats to you to become the newbie on Gamesite!'
         from_email = settings.EMAIL_HOST_USER
         to_email = [user.email,from_email]
@@ -282,8 +256,6 @@ def register_view(request):
         new_user = authenticate(username=user.username, password=password)
         login(request, new_user)
         return HttpResponseRedirect("/")
-    # else:
-    #     print("Forms not valid")
     return render(request, "registration/register.html",  {"user_form":user_form, "profile_form":profile_form})
 
 
@@ -293,8 +265,10 @@ def logout_view(request):
     logout(request)
     return render(request, "registration/logout.html", {"user":user})
 
+
 def payment_cancel_view(request):
     return HttpResponse("payment failure, try again")
+
 
 @login_required
 def payment_success_view(request):
@@ -325,11 +299,7 @@ def payment_success_view(request):
         print("Can't buy game when not logged in!")
 
 
-
-
 def payment_error_view(request,error_type):
-
-
     if error_type=='0':
         error = "Server rejected the payment!"
         print("error0")
@@ -341,9 +311,9 @@ def payment_error_view(request,error_type):
 
     return render(request, "game/payment_error.html", {'error':error})
 
+
 @login_required()
 def test(request):
-
     if request.user.is_authenticated:
         print(request.user)
         return HttpResponse("url authenticated")

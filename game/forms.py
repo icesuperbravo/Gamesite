@@ -10,8 +10,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from hashlib import md5
 
-#User = get_user_model()
-#print (User)
+
 
 class UserLoginForm(forms.Form):
     username = forms.CharField()
@@ -39,7 +38,6 @@ class UserRegisterForm(forms.ModelForm):
     email2 = forms.EmailField(label='Confirm Email')
     password = forms.CharField(widget=forms.PasswordInput)
 
-
     class Meta:
             model = User
             #print (UserDetails)
@@ -62,6 +60,7 @@ class UserRegisterForm(forms.ModelForm):
             raise forms.ValidationError("This email has already been registered")
         return email
 
+
 class ProfileForm(forms.ModelForm):
 
     usertype = forms.TypedChoiceField( label = "Which role do you want to be registered as?",
@@ -74,6 +73,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('usertype',)
 
+
 class GameForm(ModelForm):
     class Meta:
         model = Game
@@ -85,10 +85,6 @@ class DeleteGameForm(ModelForm):
         model = Game
         fields = []
 
-# class BuyGameForm(ModelForm):
-#     class Meta:
-#         model = Game
-#         fields = []
 
 class BuyGameForm(forms.Form):
     amount = forms.DecimalField(widget=forms.HiddenInput(), required= False, initial = 15)
@@ -98,22 +94,6 @@ class BuyGameForm(forms.Form):
     cancel_url = forms.URLField(widget=forms.HiddenInput(), initial='http://localhost:8000/payment/cancel')
     error_url = forms.URLField(widget=forms.HiddenInput(), initial='http://localhost:8000/payment/error')
     checksum = forms.CharField(widget=forms.HiddenInput(),required= False)
-
-
-    # def clean_checksum(self):
-    #     amount = self.cleaned_data.get('amount')
-    #     pid = self.cleaned_data.get('pid')
-    #     sid = self.cleaned_data.get('sid')
-    #     secret_key = '6cd118b1432bf22942d93d784cd17084'
-    #     checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
-    #     print (checksumstr)
-    #     m = md5(checksumstr.encode("ascii"))
-    #     print (m)
-    #     checksum = m.hexdigest()
-    #     print (checksum)
-    #     print("new clean checksum method!")
-    #     return checksum
-
 
 
 class SaveForm(ModelForm):
