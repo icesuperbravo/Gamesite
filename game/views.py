@@ -9,7 +9,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import  UserLoginForm, UserRegisterForm, ProfileForm, BuyGameForm, GameForm, DeleteGameForm
+from .forms import *
 from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
@@ -112,8 +112,20 @@ def game_buy_view(request, product_id):
 def game_play_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
+    player = request.user.profile
+    save = Save.objects.filter(player=player, game=game).first() # returns instance or None
 
-    return render(request, 'game/game_play_view.html', {'game': game})
+    if request.method == 'POST':
+        form = SaveForm(request.POST, instance=save)
+        if form.is_valid():
+            save = form.save(commit=False)
+            save.player = player
+            save.game = game
+            form.save()
+    else:
+        form = SaveForm(instance=save)
+
+    return render(request, 'game/game_play_view.html', {'game': game, 'save_form': form})
 
 
 def available_games(request):

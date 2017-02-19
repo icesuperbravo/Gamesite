@@ -14,16 +14,32 @@
     <div>
         image URL: {{game.image_url}}
     </div>
+
+
+    <div>
+        <h3>Play</h3>
+    </div>
     <div id="game">
       <iframe src= "{{game.game_url}}" id="frame"></iframe>
     </div>
+
 </div>
+
+
 <div>
-    <h3>Play</h3>
+    <form method="post" id="saveForm" action="">
+        {{ save_form }}
+        {% csrf_token %}
+    </form>
 </div>
 
 <div style="margin-top: 1rem">
-  <a href="/games/" style="margin-top: 1rem">
+  <a href=".." style="margin-top: 1rem">
+    < Back to game page
+  </a>
+</div>
+<div>
+  <a href="/games/">
       < Back to index
   </a>
 </div>
@@ -32,7 +48,9 @@
 // Message receiver
 window.addEventListener("message", function receiveMessage(e){
   if (e.data.messageType === "SCORE"){
-    // todo: register e.data.score
+    var saveForm = document.getElementById('saveForm');
+    saveForm.highscore.value = e.data.score;
+    saveForm.submit();
   } else if (e.data.messageType === "SAVE"){
     // todo: save e.data.gameState
   } else if (e.data.messageType === "LOAD_REQUEST"){

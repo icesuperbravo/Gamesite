@@ -24,9 +24,9 @@
 <div>
   <h3>Highscores</h3>
   <ul>
-  {% for hs in game.highscores.all %}
+  {% for save in game.saves.all %}
       <li>
-        {{hs.player.user.username}} - {{hs.value}}
+        {{save.player.user.username}} - {{save.highscore}}
       </li>
   {% endfor %}
   </ul>
