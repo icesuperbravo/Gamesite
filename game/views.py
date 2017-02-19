@@ -245,12 +245,17 @@ def register_view(request):
         <h3> Best Regards,</h3>
         <h3> Gamesite </h3>
         """
-        send_mail(subject,
-                  contact_message,
-                  from_email,
-                  to_email,
-                  html_message=some_html_message,
-                  fail_silently=True)
+        try:
+            send_mail(subject,
+                      contact_message,
+                      from_email,
+                      to_email,
+                      html_message=some_html_message,
+                      fail_silently=True)
+        except ConnectionRefusedError:
+            print("Failed to connect to the SMTP server. Is it running?")
+
+
         messages.success(request, 'Profile details updated.')
 
         new_user = authenticate(username=user.username, password=password)
