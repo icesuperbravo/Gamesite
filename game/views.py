@@ -34,9 +34,12 @@ def game_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
 
+    is_creator = (request.user.is_authenticated() and game.creator == request.user.profile)
+    is_playable = (request.user.is_authenticated() and game in request.user.profile.owned_games.all() or is_creator)
+
     topscores = sorted(game.saves.all(), key=lambda x: x.highscore, reverse=True)
 
-    if (request.user.is_authenticated() and game.creator == request.user.profile):
+    if (is_creator):
         if request.method == 'POST':
             if 'delete_submit' in request.POST:
                 delete_form = DeleteGameForm(request.POST, instance=game)
@@ -58,7 +61,7 @@ def game_view(request, product_id):
         delete_form = None
         edit_form = None
 
-    return render(request, 'game/game_view.html', {'game': game, 'topscores':topscores, 'edit_form': edit_form, 'delete_form': delete_form})
+    return render(request, 'game/game_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores, 'edit_form': edit_form, 'delete_form': delete_form})
 
 @login_required()
 def game_buy_view(request, product_id):
@@ -103,6 +106,10 @@ def game_play_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
     player = request.user.profile
+
+    if game not in player.owned_games.all() and game.creator != player:
+        return HttpResponseRedirect('../buy')
+
     save = Save.objects.filter(player=player, game=game).first() # returns instance or None
 
     if request.method == 'POST':

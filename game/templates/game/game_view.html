@@ -2,60 +2,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %} 
-<<<<<<< Updated upstream
-<div class='col-sm-6 col-sm-offset-3'>
-    <h1>
-        Game Title: {{game.title}}
-    </h1>
-    <ul>
-        <li>id: {{game.id}}</li>
-        <li>Description: {{game.description}}</li>
-        <li>
-            <a href={{game.image_url}}>
-                <img src="{{game.image_url}}" alt="Game image" height="240" width="240">
-            </a>
-        </li>
-        <li>
-            Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
-        </li>
-        <li>Price: {{game.price}}</li>
-    </ul>
-
-
-<div>
-  <h3>Highscores</h3>
-  <ol>
-  {% for save in topscores %}
-      <li>
-        {{save.player.user.username}} - {{save.highscore}}
-      </li>
-  {% endfor %}
-</ol>
-</div>
-
-{% if edit_form != None %}
-<div>
-    <h3>Edit game</h3>
-    <form method="post" action="">
-        {{ edit_form |crispy}}
-        {% csrf_token %}
-        <input type="submit" name="edit_submit" value="Save">
-    </form>
-</div>
-{% endif %}
-
-{% if delete_form != None %}
-<div>
-    <h3>Delete game</h3>
-    <form method="post" action="">
-        {{ delete_form }}
-        {% csrf_token %}
-      <input type="submit" name="delete_submit" value="Delete">
-    </form>
-</div>
-{% endif %}
-</div>
-=======
 <div class="row developer-page" xmlns="http://www.w3.org/1999/html">
     <div class="col-xs-6 col-xs-offset-3 ">
         <h1 class="title">Game Title: {{game.title}}</h1>
@@ -73,19 +19,20 @@
             <li>Price: {{game.price}}</li>
         </ul>
          <br>
->>>>>>> Stashed changes
+
 
         <div>
-            <h3 class="title">Highscores</h3>
-            <ul>
-                {% for hs in game.highscores.all %}
-                <li>
-                    {{hs.player.user.username}} - {{hs.value}}
-                </li>
-                {% endfor %}
-            </ul>
+          <h3>Highscores</h3>
+          <ol>
+          {% for save in topscores %}
+              <li>
+                {{save.player.user.username}} - {{save.highscore}}
+              </li>
+          {% endfor %}
+          </ol>
         </div>
-<br><br>
+
+        <br><br>
         {% if edit_form != None %}
         <div>
             <h3 class="title">Edit game</h3>
@@ -110,14 +57,16 @@
     </div>
     <div class='col-sm-9 col-sm-offset-9'>
         <div>
+          {% if not is_playable %}
             <a href="./buy">
                 < Buy game
             </a>
         </div>
-
+        {% else %}
         <div>
             <a href="./play">< Play game</a>
         </div>
+        {% endif %}
         <br><br>
     </div>
 </div>
