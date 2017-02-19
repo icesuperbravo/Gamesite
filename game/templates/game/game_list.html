@@ -14,10 +14,13 @@
     <span>
         Welcome, {{ profile.user.username }} ! You are logged in as a
         {% if profile.is_developer %}
-        <a href="/developer">{{ profile.usertype_string }}</a>.
+        <a href="/developer">{{ profile.usertype_string }}.
         {% else %}
-        <a href="/player">{{ profile.usertype_string }}</a>.
+        <a href="/player">{{ profile.usertype_string }}.
         {% endif %}
+        Click here to see your games
+        </a>.
+
         <a href="/logout" class="logout">Log out</a>
     </span>
     </div>
