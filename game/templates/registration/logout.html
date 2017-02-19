@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="row logout-page">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <p style="margin-top: 100px; text-align: center"> {{user.username}}, You have been logged out! </p>
+        <!--<a href="/">back to homepage!-->
+        <!--</a>-->
+    </div>
+</div>
+{% endblock content %}

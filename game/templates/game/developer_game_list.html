@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+<div class="row developer-page">
+    <div id="log-info" class="second-header2">
+        <span>Welcome, {{ profile.user.username }} !</span>
+        <a href="/" class="logout">Back to Home page?</a>
+    </div>
+    <!--<p>Your profile id is {{id}}</p>-->
+    <h1 class="title">Your Uploaded Games</h1>
+
+    {% for g in games %}
+    <div class="col-md-3 col-sm-4 col-xs-6">
+        <a href="/games/{{ g.id }}/">
+            <div class="game-item">
+                <img width="250" height="250" src="{{g.game_url}}" alt="game_pic">
+                <span>{{g.title}}</span>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+
+    <div class="col-xs-6 col-xs-offset-3 ">
+        {% if form != None %}
+        <h1 class="title">Add new game?</h1>
+        <div>
+            <form method="post" action="">
+                {{ form |crispy }}
+                {% csrf_token %}
+                <input class="btn btn-warning btn-block" style="margin-bottom: 30px"  type="submit">
+            </form>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock content %}

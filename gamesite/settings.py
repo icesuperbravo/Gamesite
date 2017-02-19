@@ -38,7 +38,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'game',
+#styling the form
+    'crispy_forms',
+#3rd party login
+    'social_django',
+
+
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,6 +57,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+
+   # 'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'gamesite.urls'
@@ -65,23 +75,31 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
 
+# Third party login plugin
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_SECRET = '6570f77e60f21da6965380d5e23675c5'
+SOCIAL_AUTH_FACEBOOK_KEY = '1874746842814154'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '369019979835-juo8vsncs0o31rn7lggqtc5kaq1tckfn.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='8CtYt9LaHps3CWQl-qG0fYbh'
+
 WSGI_APPLICATION = 'gamesite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 # Database PostgreSQL
 DATABASES = {
@@ -133,6 +151,20 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+#Sending emails to my gmail account
+#EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = 'icesuperbravo@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+
+#sending emails to the console backend
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -158,3 +190,6 @@ if "DYNO" in os.environ:
     ALLOWED_HOSTS = ['*']
 
 
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
+LOGOUT_URL = "/logout/"

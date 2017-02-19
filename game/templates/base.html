@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<!--DOCTYPE html -->
+<html>
+<head>
+    <title>{% block head_title %}Gamesite{% endblock head_title %}</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' >
+
+    <link rel='stylesheet' href=" {% static "style.css" %} "/>
+
+    {% block head_extra %} {% endblock head_extra %}
+</head>
+<body>
+<!--Nav Header Part-->
+<nav class="navbar navbar-inverse modifynavbar">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-3">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://localhost:8000">Gamesite</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-3">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">About</a></li>
+                <!--<li><a href="#">Services</a></li>-->
+                <!--<li><a href="#">Works</a></li>-->
+                <!--<li><a href="#">News</a></li>-->
+                <!--<li><a href="#">Contact</a></li>-->
+                <li>
+                    <a class="btn btn-default btn-outline btn-circle collapsed"  data-toggle="collapse" href="#nav-collapse3" aria-expanded="false" aria-controls="nav-collapse3">Search</a>
+                </li>
+            </ul>
+            <div class="collapse nav navbar-nav nav-collapse slide-down" id="nav-collapse3">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" />
+                    </div>
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </form>
+            </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+
+
+
+
+
+<!--Main Content Container-->
+<div class="main-content">
+    {% spaceless %}
+    {% block content %}{% endblock content %}
+    {% endspaceless %}
+</div>
+
+<!--Footer Part-->
+<footer>
+    <div class="container footer">
+        <p>&copy Gamesite is a project for the course <a href="https://mycourses.aalto.fi/course/view.php?id=13030" rel="author">CS-C3170</a> in Aalto University, which is based on Django and Bootstrap.</p>
+    </div>
+</footer>
+
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous">
+</script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
