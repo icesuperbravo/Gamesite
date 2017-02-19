@@ -14,7 +14,7 @@
             <li>id: {{game.id}}</li>
             <li>Description: {{game.description}}</li>
         </ul>
-        <iframe style="margin-bottom: 40px" src="{{game.game_url}}" height="600" width="600"></iframe>
+        <iframe id="frame" style="margin-bottom: 40px" src="{{game.game_url}}" height="600" width="600"></iframe>
 
         <form method="post" id="saveForm" action="">
             {{ save_form }}
@@ -29,26 +29,28 @@
                 saveForm.highscore.value = e.data.score;
                 saveForm.submit();
             } else if (e.data.messageType === "SAVE"){
-                // todo: save e.data.gameState
-            } else if (e.data.messageType === "LOAD_REQUEST"){
-                // todo: send LOAD message with saved gameState
-                //
                 var msg = {
-                    messageType:"LOAD",
-                    // example gameState:
-                    gameState: {
-                        playerItems: [
-                            "Sword",
-                            "Wizard Hat"
-                        ],
-                        score: 506.0 // Float
-                    }
+                  messageType: "ERROR",
+                  info: "Saving/loading not implemented, loading uses example gameState."
+                }
+                document.getElementById("frame").contentWindow.postMessage(msg,document.getElementById("frame").src)
+            } else if (e.data.messageType === "LOAD_REQUEST"){
+                var msg = {
+                  messageType:"LOAD",
+                  // example gameState:
+                  gameState: {
+                      playerItems: [
+                          "Sword",
+                          "Wizard Hat"
+                      ],
+                      score: 506.0 // Float
+                  }
                 }
                 document.getElementById("frame").contentWindow.postMessage(msg,document.getElementById("frame").src)
             } else if (e.data.messageType === "SETTING")
-            // sets iFrame height and width according to e.data.options.height and e.data.options.width
+                // sets iFrame height and width according to e.data.options.height and e.data.options.width
                 document.getElementById("frame").height = e.data.options.height;
-            document.getElementById("frame").width = e.data.options.width;
+                document.getElementById("frame").width = e.data.options.width;
         }, false);
 
     </script>
