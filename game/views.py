@@ -100,7 +100,6 @@ def game_buy_view(request, product_id):
 def game_play_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
-<<<<<<< Updated upstream
     player = request.user.profile
     save = Save.objects.filter(player=player, game=game).first() # returns instance or None
 
@@ -121,11 +120,6 @@ def game_play_view(request, product_id):
         form = SaveForm(instance=save)
 
     return render(request, 'game/game_play_view.html', {'game': game, 'save_form': form})
-=======
-    profile=request.user.profile
-
-    return render(request, 'game/game_play_view.html', {'game': game, 'profile':profile})
->>>>>>> Stashed changes
 
 
 def available_games(request):

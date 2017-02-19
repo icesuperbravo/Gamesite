@@ -1,85 +1,3 @@
-<<<<<<< Updated upstream
-<!DOCTYPE html>
-<html>
-<body>
-<h1>
-    Game Title: {{game.title}}
-</h1>
-<div>
-    <div>
-        id: {{game.id}}
-    </div>
-    <div>
-        Description: {{game.description}}
-    </div>
-    <div>
-        image URL: {{game.image_url}}
-    </div>
-
-
-    <div>
-        <h3>Play</h3>
-    </div>
-    <div id="game">
-      <iframe src= "{{game.game_url}}" id="frame"></iframe>
-    </div>
-
-</div>
-
-
-<div>
-    <form method="post" id="saveForm" action="">
-        {{ save_form }}
-        {% csrf_token %}
-    </form>
-</div>
-
-<div style="margin-top: 1rem">
-  <a href=".." style="margin-top: 1rem">
-    < Back to game page
-  </a>
-</div>
-<div>
-  <a href="/games/">
-      < Back to index
-  </a>
-</div>
-
-<script>
-// Message receiver
-window.addEventListener("message", function receiveMessage(e){
-  if (e.data.messageType === "SCORE"){
-    var saveForm = document.getElementById('saveForm');
-    saveForm.highscore.value = e.data.score;
-    saveForm.submit();
-  } else if (e.data.messageType === "SAVE"){
-    // todo: save e.data.gameState
-  } else if (e.data.messageType === "LOAD_REQUEST"){
-    // todo: send LOAD message with saved gameState
-    //
-    var msg = {
-      messageType:"LOAD",
-      // example gameState:
-      gameState: {
-        playerItems: [
-          "Sword",
-          "Wizard Hat"
-        ],
-        score: 506.0 // Float
-      }
-    }
-    document.getElementById("frame").contentWindow.postMessage(msg,document.getElementById("frame").src)
-  } else if (e.data.messageType === "SETTING")
-    // sets iFrame height and width according to e.data.options.height and e.data.options.width
-    document.getElementById("frame").height = e.data.options.height;
-    document.getElementById("frame").width = e.data.options.width;
-}, false);
-
-</script>
-<noscript>Sorry, JavaScript doesn't work!</noscript>
-</body>
-</html>
-=======
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
@@ -99,6 +17,38 @@ window.addEventListener("message", function receiveMessage(e){
         <iframe style="margin-bottom: 40px" src="{{game.game_url}}" height="600" width="600"></iframe>
 
     </div>
+    <script>
+        // Message receiver
+        window.addEventListener("message", function receiveMessage(e){
+            if (e.data.messageType === "SCORE"){
+                var saveForm = document.getElementById('saveForm');
+                saveForm.highscore.value = e.data.score;
+                saveForm.submit();
+            } else if (e.data.messageType === "SAVE"){
+                // todo: save e.data.gameState
+            } else if (e.data.messageType === "LOAD_REQUEST"){
+                // todo: send LOAD message with saved gameState
+                //
+                var msg = {
+                    messageType:"LOAD",
+                    // example gameState:
+                    gameState: {
+                        playerItems: [
+                            "Sword",
+                            "Wizard Hat"
+                        ],
+                        score: 506.0 // Float
+                    }
+                }
+                document.getElementById("frame").contentWindow.postMessage(msg,document.getElementById("frame").src)
+            } else if (e.data.messageType === "SETTING")
+            // sets iFrame height and width according to e.data.options.height and e.data.options.width
+                document.getElementById("frame").height = e.data.options.height;
+            document.getElementById("frame").width = e.data.options.width;
+        }, false);
+
+    </script>
+    <noscript>Sorry, JavaScript doesn't work!</noscript>
 </div>
 {% endblock content %}
->>>>>>> Stashed changes
+
