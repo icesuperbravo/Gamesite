@@ -200,9 +200,8 @@ def developer_public_view(request, developer_id):
 
 @login_required
 def player_view(request):
-    if not request.user.profile.is_developer():
-        profile = request.user.profile
-        games =request.user.profile.owned_games.all()
+    profile = request.user.profile
+    games = request.user.profile.owned_games.all()
     return render(request, 'game/player_game_list.html', {'profile':profile, 'games': games})
 
 
