@@ -1,0 +1,361 @@
+* {
+    margin: 0 0;
+}
+/*Nav Bar*/
+.modifynavbar {
+    border-radius: 0px;
+    padding: 8px 0 8px 0;
+    margin-bottom: 0px;
+}
+
+.navbar-brand {
+    position: relative;
+    z-index: 2;
+}
+
+.navbar-nav.navbar-right .btn {
+    position: relative;
+    z-index: 2;
+    padding: 4px 20px;
+    margin: 10px auto;
+    transition: transform 0.3s;
+}
+
+.navbar .navbar-collapse {
+    position: relative;
+    overflow: hidden !important;
+}
+
+.navbar .navbar-collapse .navbar-right > li:last-child {
+    padding-left: 22px;
+}
+
+.navbar .nav-collapse {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding-right: 120px;
+    padding-left: 80px;
+    width: 100%;
+}
+
+.navbar.navbar-default .nav-collapse {
+    background-color: #f8f8f8;
+}
+
+.navbar.navbar-inverse .nav-collapse {
+    background-color: #222;
+}
+
+.navbar .nav-collapse .navbar-form {
+    border-width: 0;
+    box-shadow: none;
+}
+
+.nav-collapse > li {
+    float: right;
+}
+
+.btn.btn-circle {
+    border-radius: 50px;
+}
+
+.btn.btn-outline {
+    background: transparent;
+}
+
+.navbar-nav.navbar-right .btn:not(.collapsed) {
+    background-color: rgb(111, 84, 153);
+    border-color: rgb(111, 84, 153);
+    color: rgb(255, 255, 255);
+}
+
+.navbar.navbar-default .nav-collapse,
+.navbar.navbar-inverse .nav-collapse {
+    height: auto !important;
+    transition: transform 0.3s;
+    transform: translate(0px, -50px);
+}
+
+.navbar.navbar-default .nav-collapse.in,
+.navbar.navbar-inverse .nav-collapse.in {
+    transform: translate(0px, 0px);
+}
+.main-content {
+    position: relative;
+}
+
+/*Second Header*/
+.second-header {
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    padding: 15px 8px;
+    background-color: rgba(112, 128, 144, 0.44);
+    margin: auto;
+    color: #dad7d7;
+
+}
+
+.second-header a {
+    color: #dad7d7;
+}
+
+.second-header a:hover {
+    color: #fff;
+    background-color: transparent;
+}
+
+.second-header .logout {
+    margin-right: 10px;
+    float: right;
+}
+
+/*HomePage Background*/
+.large-header {
+    position: relative;
+    width: 100%;
+    background: #333;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+}
+
+#large-header {
+    background-image: url('http://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/img/demo-1-bg.jpg');
+}
+
+.main-title {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    color: #f9f1e9;
+    text-align: center;
+    top: 15%;
+    left: 50%;
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+}
+.game-list {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    right: 5%;
+}
+
+.game-item {
+    position: relative;
+    overflow: hidden;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto 25px;
+}
+.game-item span {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+    color: #fff;
+    opacity: .8;
+}
+
+.demo-1 .main-title {
+    text-transform: uppercase;
+    font-size: 4.2em;
+    letter-spacing: 0.1em;
+}
+
+.main-title .thin {
+    font-weight: 200;
+}
+/*HomePage Background End*/
+
+/* http:// host/login/ Login Page*/
+.login-page {
+    height: 600px;
+    background: rgba(34, 34, 34, 0.9);
+    color: #cccccc;
+}
+.login-content {
+    margin-top: 70px;
+}
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.login {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+/*Login Page End*/
+
+/*Register Page*/
+.register-page {
+    background: rgba(34, 34, 34, 0.9);
+    color: #cccccc;
+}
+/*Register page End*/
+
+/*Developer Page*/
+.developer-page {
+    background: rgba(34, 34, 34, 0.9);
+    color: #cccccc;
+}
+
+.second-header2 {
+    padding: 15px 8px;
+    background-color: rgba(112, 128, 144, 0.44);
+    margin: auto;
+    color: #dad7d7;
+}
+.second-header2 span {
+    margin-left: 10px;
+}
+
+.second-header2 a {
+    color: #dad7d7;
+}
+
+.second-header2 a:hover {
+    color: #fff;
+    background-color: transparent;
+}
+
+.second-header2 .logout {
+    margin-right: 10px;
+    float: right;
+}
+/*Developer page End*/
+
+
+/*Footer*/
+footer {
+    color: #666;
+    background: #222;
+    padding: 18px 0 18px 0;
+    border-top: 1px solid #000;
+}
+
+footer p {
+    text-align: center;
+}
+
+footer a {
+    color: #999;
+}
+
+footer a:hover {
+    color: #efefef;
+}
+/*Footer End*/
+
+/*Logout Page*/
+.logout-page {
+    height: 600px;
+    background: rgba(34, 34, 34, 0.9);
+    color: #cccccc;
+}
+
+/*Logout Page End*/
+
+
+
+/*XS screen responsive*/
+@media screen and (max-width: 767px) {
+    /*Nav bar responsive*/
+    .navbar .navbar-collapse .navbar-right > li:last-child {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .navbar .nav-collapse {
+        margin: 7.5px auto;
+        padding: 0;
+    }
+
+    .navbar .nav-collapse .navbar-form {
+        margin: 0;
+    }
+
+    .nav-collapse > li {
+        float: none;
+    }
+
+    .navbar.navbar-default .nav-collapse,
+    .navbar.navbar-inverse .nav-collapse {
+        transform: translate(-100%, 0px);
+    }
+
+    .navbar.navbar-default .nav-collapse.in,
+    .navbar.navbar-inverse .nav-collapse.in {
+        transform: translate(0px, 0px);
+    }
+
+    .navbar.navbar-default .nav-collapse.slide-down,
+    .navbar.navbar-inverse .nav-collapse.slide-down {
+        transform: translate(0px, -100%);
+    }
+
+    .navbar.navbar-default .nav-collapse.in.slide-down,
+    .navbar.navbar-inverse .nav-collapse.in.slide-down {
+        transform: translate(0px, 0px);
+    }
+/*Background Responsive*/
+    .demo-1 .main-title {
+        font-size: 3em;
+    }
+
+    /*login page*/
+    .facebook {
+
+        margin-bottom: 15px;
+
+    }
+
+    .google  {
+
+        margin-bottom: 15px;
+
+    }
+
+    .register {
+        margin-bottom: 15px;
+    }
+    /*login page end*/
+
+}
+
+
+@media  screen and  (min-width: 992px)
+{
+
+    /*login page*/
+    .facebook {
+    margin-right: 2.5%;
+    margin-bottom: 30px;
+    width: 30%;
+    }
+
+    .google  {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 30px;
+    width: 30%;
+    }
+
+    .register {
+        margin-left: 2.5%;
+        margin-bottom: 30px;
+        width: 30%;
+    }
+    /*login page end*/
+
+}
