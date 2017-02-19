@@ -83,6 +83,7 @@ TEMPLATES = [
     },
 ]
 
+# Third party login plugin
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
@@ -99,15 +100,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='8CtYt9LaHps3CWQl-qG0fYbh'
 WSGI_APPLICATION = 'gamesite.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 
 # Database PostgreSQL
 DATABASES = {
@@ -162,7 +154,7 @@ ALLOWED_HOSTS = ['*']
 #Sending emails to my gmail account
 #EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = 'icesuperbravo@gmail.com'
-# EMAIL_HOST_PASSWORD = 'tatayoung1214'
+# EMAIL_HOST_PASSWORD = ''
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 

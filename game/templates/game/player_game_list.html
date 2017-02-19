@@ -2,20 +2,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %} 
-<p>Your profile id is {{id}}</p>
+<div  class="row developer-page">
+    <div id="log-info" class="second-header2">
+        <span>Welcome, {{ profile.user.username }} !</span>
+        <a href="/" class="logout">Back to Home page?</a>
+    </div>
 
-<h1>Games that you have bought: </h1>
+<!--<p>Your profile id is {{id}}</p>-->
 
-{% for g in games %}
-<div>
-    {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a>
-</div>
-{% endfor %}
+<h1 class="title">Games that you have bought: </h1>
+    {% for g in games %}
+    <div style="height: 300px;" class="col-md-3 col-sm-4 col-xs-6">
+        <a href="/games/{{ g.id }}/">
+            <div class="game-item">
+                <img width="250" height="250" src="{{g.game_url}}" alt="game_pic">
+                <span>{{g.title}}</span>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
 
-<div style="margin-top: 1rem">
-  <a href="/games/" style="margin-top: 1rem">
-      < Back to index
-  </a>
 </div>
 
 {% endblock content %}

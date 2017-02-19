@@ -27,10 +27,6 @@ class Game(models.Model):
         self.save()
 
 
-
-""" TODO: HighsCore model - with fields game, score, and user """
-
-
 class Profile(models.Model):
     USERTYPE_PLAYER = 0
     USERTYPE_DEVELOPER = 1
@@ -58,12 +54,10 @@ class Transaction(models.Model):
     date =  models.DateTimeField(auto_now=True, blank=True)
 
 
-class Highscore(models.Model):
+class Save(models.Model):
     player = models.ForeignKey('Profile')
-    game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='highscores')
-    value = models.IntegerField(null=False)
+    game = models.ForeignKey('Game', on_delete=models.CASCADE, related_name='saves')
+    highscore = models.IntegerField(null=False)
 
     class Meta:
         unique_together = (("player", "game"),)
-
-

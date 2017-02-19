@@ -9,7 +9,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .forms import  UserLoginForm, UserRegisterForm, ProfileForm, BuyGameForm, GameForm, DeleteGameForm
+from .forms import *
 from django.contrib.auth.models import Group
 from django.conf import settings
 from django.core.mail import send_mail
@@ -64,47 +64,35 @@ def game_buy_view(request, product_id):
     game = Game.objects.get(pk=product_id)
     user = request.user
     print (user)
-    buyers = Profile.objects.filter(owned_games=game)
-    print (buyers)
-    if user.profile in buyers:
-        error="The user has already bought the game!"
-        print(error)
-        return HttpResponseRedirect('/payment/error/1/')
-    else:
-
-        transaction = Transaction()
-        transaction.payer = user
-        transaction.payed_game = game
-        transaction.price = game.price
-        transaction.date = timezone.now()
-        transaction.save()
-
-        buy_form = BuyGameForm()
-        amount = game.price
-        print (amount)
-        pid = transaction.id
-        sid = buy_form.fields["sid"].initial
-        secret_key = '6cd118b1432bf22942d93d784cd17084'
-        checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
-        m = md5(checksumstr.encode("ascii"))
-        # print (m)
-        checksum = m.hexdigest()
-        print (checksum)
-        new_buy_form = BuyGameForm(initial={'pid': pid, 'amount': amount, 'checksum': checksum})
-        print (new_buy_form)
-
-        # user = request.user
-        # if request.user.is_authenticated:
-        #     user.profile.owned_games.add(game)
-        #     print("Successfully bought game")
-        # else:
-        #     print("Can't buy game when not logged in!")
-        # return HttpResponseRedirect('/games/')
+    owned_games = user.profile.owned_games
+    print (owned_games)
+    # if owned_games != None:
+    #     error="The user has already bought the game!"
+    #     print(error)
+    #     return HttpResponseRedirect('/payment/error/1/')
     # else:
-    #     print ('buy form not valid')
 
-    # else:
-    #     buy_form = DeleteGameForm(instance=game)
+    transaction = Transaction()
+    transaction.payer = user
+    transaction.payed_game = game
+    transaction.price = game.price
+    transaction.date = timezone.now()
+    transaction.save()
+
+    buy_form = BuyGameForm()
+    amount = game.price
+    print (amount)
+    pid = transaction.id
+    sid = buy_form.fields["sid"].initial
+    secret_key = '6cd118b1432bf22942d93d784cd17084'
+    checksumstr = "pid={}&sid={}&amount={}&token={}".format(pid, sid, amount, secret_key)
+    m = md5(checksumstr.encode("ascii"))
+    # print (m)
+    checksum = m.hexdigest()
+    print (checksum)
+    new_buy_form = BuyGameForm(initial={'pid': pid, 'amount': amount, 'checksum': checksum})
+    print (new_buy_form)
+
 
     return render(request, 'game/game_buy_view.html', {'game': game, 'new_buy_form': new_buy_form})
 
@@ -112,8 +100,32 @@ def game_buy_view(request, product_id):
 def game_play_view(request, product_id):
     """A view of a single game."""
     game = Game.objects.get(pk=product_id)
+<<<<<<< Updated upstream
+    player = request.user.profile
+    save = Save.objects.filter(player=player, game=game).first() # returns instance or None
 
-    return render(request, 'game/game_play_view.html', {'game': game})
+    if request.method == 'POST':
+        form = SaveForm(request.POST, instance=save)
+        if save != None and save.highscore != None:
+            old_highscore = save.highscore
+        else:
+            old_highscore = 0
+        if form.is_valid():
+            save = form.save(commit=False)
+            new_highscore = form.cleaned_data['highscore']
+            if new_highscore > old_highscore:
+                save.player = player
+                save.game = game
+                form.save()
+    else:
+        form = SaveForm(instance=save)
+
+    return render(request, 'game/game_play_view.html', {'game': game, 'save_form': form})
+=======
+    profile=request.user.profile
+
+    return render(request, 'game/game_play_view.html', {'game': game, 'profile':profile})
+>>>>>>> Stashed changes
 
 
 def available_games(request):
@@ -154,7 +166,7 @@ def developer_view(request):
     """A view of the logged-in developer's games."""
 
     if request.user.profile.is_developer():
-        id = request.user.profile.id
+        profile = request.user.profile
         games = Game.objects.filter(creator=request.user.profile)
     else:
         print("Error")
@@ -172,7 +184,7 @@ def developer_view(request):
             form = GameForm(initial={'title': 'Super Django Bros.', 'price': 0.0}, instance=new_game)
         else:
             form = None
-    return render(request, 'game/developer_game_list.html', {'id':id, 'games': games, 'form': form})
+    return render(request, 'game/developer_game_list.html', {'profile':profile, 'games': games, 'form': form})
 
 
 def developer_public_view(request, developer_id):
@@ -185,14 +197,13 @@ def developer_public_view(request, developer_id):
 @login_required
 def player_view(request):
     if not request.user.profile.is_developer():
-        id = request.user.profile.id
+        profile = request.user.profile
         games =request.user.profile.owned_games.all()
-    return render(request, 'game/player_game_list.html', {'id':id, 'games': games})
+    return render(request, 'game/player_game_list.html', {'profile':profile, 'games': games})
 
 
 def login_view(request):
-    title ="Gamesite Login"
-    print("Login view")
+
     # form = UserLoginForm()
     # if request.method == 'GET':
     #     print('GET request')
@@ -218,12 +229,11 @@ def login_view(request):
     else:
         print("Login form not valid")
 
-    return render(request, "registration/login.html", {"form":form, "title":title})
+    return render(request, "registration/login.html", {"form":form})
 
 
 def register_view(request):
     #print(request.user.is_authenticated())
-    title = "Gamesite Registration"
 
     user_form = UserRegisterForm(request.POST or None)
     profile_form = ProfileForm(request.POST or None)
@@ -271,13 +281,14 @@ def register_view(request):
         return HttpResponseRedirect("/")
     # else:
     #     print("Forms not valid")
-    return render(request, "registration/register.html",  {"user_form":user_form, "profile_form":profile_form, "title":title})
+    return render(request, "registration/register.html",  {"user_form":user_form, "profile_form":profile_form})
 
 
 def logout_view(request):
-    username= request.user.username
+    user= request.user
+    print (user)
     logout(request)
-    return render(request, "registration/logout.html", {"username":username})
+    return render(request, "registration/logout.html", {"user":user})
 
 def payment_cancel_view(request):
     return HttpResponse("payment failure, try again")

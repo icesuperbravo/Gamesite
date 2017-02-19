@@ -3,9 +3,11 @@
 
 
 {% block content %}
-<div class='col-sm-6 col-sm-offset-3'>
-   <p> {{username}}, You have been logged out! </p>
-   <a href="/">back to homepage!
-   </a>
+<div class="row logout-page">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <p style="margin-top: 100px; text-align: center"> {{user.username}}, You have been logged out! </p>
+        <!--<a href="/">back to homepage!-->
+        <!--</a>-->
+    </div>
 </div>
 {% endblock content %}

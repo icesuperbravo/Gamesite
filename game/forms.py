@@ -5,7 +5,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from .models import Profile, Game
+from .models import Profile, Game, Save
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from hashlib import md5
@@ -113,3 +113,11 @@ class BuyGameForm(forms.Form):
     #     print (checksum)
     #     print("new clean checksum method!")
     #     return checksum
+
+
+
+class SaveForm(ModelForm):
+    class Meta:
+        model = Save
+        widgets = {'highscore': forms.HiddenInput()}
+        fields = ['highscore']

@@ -2,18 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="row developer-page">
+ <!--<p>Your profile id is {{id}}</p>-->
+    <h1 class="title">{{user.username}}'s Uploaded Games: </h1>
 
-<h1>Games created by {{name}} (developer id: {{id}})</h1>
-{% for g in games %}
-    <div>
-        {{g.id}}<a href="/games/{{ g.id }}/"> {{g.title}} </a> {% endfor %}
+    {% for g in games %}
+    <div style="height:600px" class="col-md-3 col-sm-4 col-xs-6">
+        <a href="/games/{{ g.id }}/">
+            <div class="game-item">
+                <img width="250" height="250" src="{{g.game_url}}" alt="game_pic">
+                <span>{{g.title}}</span>
+            </div>
+        </a>
     </div>
-
-<div style="margin-top: 1rem">
-    <a href="/games/">
-        < Back to index
-    </a>
+    {% endfor %}
+    </div>
 </div>
-
-
 {% endblock content %}

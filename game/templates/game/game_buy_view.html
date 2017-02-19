@@ -2,28 +2,29 @@
 {% load crispy_forms_tags %}
 
 {% block content %} 
-<div class='col-sm-6 col-sm-offset-3'> 
-    <h3>BUY game</h3> 
-    <ul> 
-        <li>Game Title: {{game.title}}</li>
-         
-        <li>id: {{game.id}}</li>
-         
-        <li>Description: {{game.description}}</li>
-         
-        <li>image URL: {{game.image_url}}</li>
+<div class="row login-page">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <h3 style="margin-top: 40px" class="title">BUY game</h3> 
 
-        <li>Price: {{game.price}}</li>
-         
-    </ul>
-     <p>{{error}}</p>
-    <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST"> 
-        {{ new_buy_form | crispy }} 
-        {% csrf_token%} 
-        <input type="submit" class='btn btn-default' value="Accept Payment"/> 
-    </form>
+            <p class="title">Game Title: {{game.title}}</p>
+             
+            <p class="title">id: {{game.id}}</p>
+             
+            <p class="title">Description: {{game.description}}</p>
+             
+            <p class="title">image URL: {{game.image_url}}</p>
+
+            <p class="title">Price: {{game.price}}</p>
+             
+
+         <p>{{error}}</p>
+        <form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST"> 
+            {{ new_buy_form | crispy }} 
+            {% csrf_token%} 
+            <input type="submit" class='btn btn-default btn-block' value="Accept Payment"/> 
+        </form>
+    </div>
      
 </div> 
 <!--<form action="http://payments.webcourse.niksula.hut.fi/pay/" method="POST">-->     <!--<input type="hidden" name="pid" value="payment1" />-->     <!--<input type="hidden" name="sid" value="groupBest" />-->     <!--<input type="hidden" name="success_url"-->            <!--value="http://localhost:8000/payment/success" />-->     <!--<input type="hidden" name="cancel_url"-->            <!--value="http://localhost:8000/payment/cancel" />-->     <!--<input type="hidden" name="error_url"-->            <!--value="http://localhost:8000/payment/error" />-->     <!--<input type="hidden" name="checksum"-->                <!--value="ee306a1dec60d40534391106f7855434" />-->      <!--<label for="id_amount">Amount</label>-->     <!--<input type="text" id="id_amount" name="amount" value="5" />-->     <!--<input type="submit" value="Accept Payment"/>--> <!--</form>--> 
-<a href="/games/">  < Back to index </a> 
 {% endblock content %} 

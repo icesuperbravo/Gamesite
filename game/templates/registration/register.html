@@ -3,16 +3,18 @@
 
 
 {% block content %}
-<div class='col-sm-6 col-sm-offset-3'>
-    <h1>{{ title }}</h1>
-    <hr/>
+<div class="row register-page">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <h1 class="title">Register Your Own Account</h1>
+        <hr/>
 
-    <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+        <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
 
-        {{ user_form|crispy }}
-        {{ profile_form|crispy }}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
 
-        <input type='submit' class='btn btn-default' value='register!' />
-    </form>
+            <input type='submit' class='btn btn-warning btn-lg btn-block login' value='register!'/>
+        </form>
+    </div>
 </div>
 {% endblock content %}

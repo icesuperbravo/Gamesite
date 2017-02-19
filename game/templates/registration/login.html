@@ -3,25 +3,30 @@
 
 
 {% block content %}
-<div class='col-sm-6 col-sm-offset-3'>
-    <h1>{{ title }}</h1>
-    <hr/>
+<div class="row login-page">
+    <div class="col-xs-6 col-xs-offset-3 login-content">
+        <h1 class="title">GameSite Login</h1>
+        <hr/>
 
-    <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+        <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+            {{ form|crispy }}
+            <input type='submit' class='btn btn-warning btn-lg btn-block login' value='login'/>
+        </form>
 
 
-        {{ form|crispy }}
-        <input type='submit' class='btn btn-default' value='login' />
-    </form>
+        <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-lg facebook col-md-4 col-xs-12" role="button">
+            <i class="fa fa-facebook-square" aria-hidden="true"></i>
+            <span> Facebook</span>
+        </a>
 
-    <div>
-      <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
-    </div>
-    <div>
-      <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a>
-    </div>
-    <div>
-      <a href="/register/">Register</a>
+        <a href="{% url 'social:begin' 'google-oauth2' %} " class="btn btn-danger btn-lg google col-md-4 col-xs-12 " role="button">
+            <i class="fa fa-google-plus" aria-hidden="true"></i>
+            <span> Google</span>
+        </a>
+
+
+        <a href="/register/" class="btn btn-info btn-lg register col-md-4 col-xs-12" role="button">Register</a>
+
     </div>
 
 

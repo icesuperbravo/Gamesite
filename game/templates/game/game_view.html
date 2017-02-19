@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %} 
+<<<<<<< Updated upstream
 <div class='col-sm-6 col-sm-offset-3'>
     <h1>
         Game Title: {{game.title}}
@@ -24,9 +25,9 @@
 <div>
   <h3>Highscores</h3>
   <ul>
-  {% for hs in game.highscores.all %}
+  {% for save in game.saves.all %}
       <li>
-        {{hs.player.user.username}} - {{hs.value}}
+        {{save.player.user.username}} - {{save.highscore}}
       </li>
   {% endfor %}
   </ul>
@@ -54,25 +55,70 @@
 </div>
 {% endif %}
 </div>
+=======
+<div class="row developer-page" xmlns="http://www.w3.org/1999/html">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <h1 class="title">Game Title: {{game.title}}</h1>
+        <ul>
+            <li>id: {{game.id}}</li>
+            <li>Description: {{game.description}}</li>
+            <li>
+                <a href={{game.image_url}}>
+                    <img src="{{game.image_url}}" alt="Game image" height="240" width="240">
+                </a>
+            </li>
+            <li>
+                Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
+            </li>
+            <li>Price: {{game.price}}</li>
+        </ul>
+         <br>
+>>>>>>> Stashed changes
 
-<div class='col-sm-9 col-sm-offset-9'>
-<div>
-    <a href="./buy">
-        < Buy game
-    </a>
-</div>
+        <div>
+            <h3 class="title">Highscores</h3>
+            <ul>
+                {% for hs in game.highscores.all %}
+                <li>
+                    {{hs.player.user.username}} - {{hs.value}}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+<br><br>
+        {% if edit_form != None %}
+        <div>
+            <h3 class="title">Edit game</h3>
+            <form method="post" action="">
+                {{ edit_form |crispy}}
+                {% csrf_token %}
+                <input type="submit" name="edit_submit" value="Save">
+            </form>
+        </div>
+        {% endif %}
 
-<div>
-    <a href="./play">
-        < Play game
-    </a>
-</div>
+        {% if delete_form != None %}
+        <div>
+            <h3 class="title">Delete game</h3>
+            <form method="post" action="">
+                {{ delete_form }}
+                {% csrf_token %}
+                <input type="submit" name="delete_submit" value="Delete">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+    <div class='col-sm-9 col-sm-offset-9'>
+        <div>
+            <a href="./buy">
+                < Buy game
+            </a>
+        </div>
 
-<div>
-    <a href="/games/">
-        < Back to index
-    </a>
-</div>
-
+        <div>
+            <a href="./play">< Play game</a>
+        </div>
+        <br><br>
+    </div>
 </div>
 {% endblock content %} 
