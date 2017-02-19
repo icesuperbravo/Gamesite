@@ -117,11 +117,17 @@ def game_play_view(request, product_id):
 
     if request.method == 'POST':
         form = SaveForm(request.POST, instance=save)
+        if save != None and save.highscore != None:
+            old_highscore = save.highscore
+        else:
+            old_highscore = 0
         if form.is_valid():
             save = form.save(commit=False)
-            save.player = player
-            save.game = game
-            form.save()
+            new_highscore = form.cleaned_data['highscore']
+            if new_highscore > old_highscore:
+                save.player = player
+                save.game = game
+                form.save()
     else:
         form = SaveForm(instance=save)
 
