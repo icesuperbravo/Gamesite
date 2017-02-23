@@ -1,5 +1,6 @@
 ﻿# CS-C3170 Web Software Development Project Plan
 
+# The project is uploaded to the could platform Heroku, and you can have access to http://wsd2016.heroku.com
 # 0. Setup
 Install python 3.5:
 ref: https://www.python.org/downloads/release/python-352/
