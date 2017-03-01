@@ -16,7 +16,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils import timezone
 from hashlib import md5
-import requests
+
 
 from game.models import *
 from .forms import *
@@ -35,6 +35,7 @@ def game_view(request, product_id):
     is_playable = (request.user.is_authenticated() and game in request.user.profile.owned_games.all() or is_creator)
 
     topscores = sorted(game.saves.all(), key=lambda x: x.highscore, reverse=True)
+
 
     if (is_creator):
         if request.method == 'POST':
@@ -124,9 +125,12 @@ def game_play_view(request, product_id):
 
 def available_games(request):
     """A view of all games in the shop."""
-
+    string= ""
     games = Game.objects.all()
-
+    query = request.GET.get("q")
+    if query:
+        games = games.filter(title__icontains = query)
+        string = "Searching Results:"
     if request.user.is_authenticated():
         profile = None
         user=request.user
@@ -137,7 +141,8 @@ def available_games(request):
     else:
         profile = None
 
-    return render(request, 'game/game_list.html', {'games': games, 'profile': profile})
+
+    return render(request, 'game/game_list.html', {'games': games, 'profile': profile, 'string':string})
 
 
 def third_party_view(request):

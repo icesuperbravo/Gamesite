@@ -37,8 +37,14 @@
     {% endif %}
     <!--Second Header part end-->
 
+
+
     <!--game category part-->
     <div class="row game-list ">
+        {% if string != None %}
+        <h3 style="color:#dad7d7"> {{string}} </h3>
+        {% endif %}
+
         {% for g in games %}
         <div class="col-md-3 col-sm-4 col-xs-6">
             <a href="/games/{{ g.id }}/">

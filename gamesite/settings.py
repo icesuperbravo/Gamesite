@@ -101,23 +101,23 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 
 
 
-# Database PostgreSQL
-# DATABASES = {
-#    "default": {
-#        "ENGINE": "django.db.backends.postgresql_psycopg2",
-#        "NAME": "",
-#        "USER": "",
-#        "PASSWORD": "",
-#        "HOST": "localhost",
-#        "PORT": "5432",
-#    }
-#}
-
+#Database PostgreSQL
 DATABASES = {
-    "default": {
-    "ENGINE": "django.db.backends.postgresql_psycopg2",
-    }
+   "default": {
+       "ENGINE": "django.db.backends.postgresql_psycopg2",
+       "NAME": "icesuperbravo",
+       "USER": "",
+       "PASSWORD": "tatayoung1214",
+       "HOST": "localhost",
+       "PORT": "5432",
+   }
 }
+
+# DATABASES = {
+#     "default": {
+#     "ENGINE": "django.db.backends.postgresql_psycopg2",
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
