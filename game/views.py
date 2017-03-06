@@ -23,8 +23,6 @@ from .forms import *
 
 
 
-def about(request):
-    return HttpResponse("about page")
 
 
 def game_view(request, product_id):
@@ -58,6 +56,16 @@ def game_view(request, product_id):
         delete_form = None
         edit_form = None
     return render(request, 'game/game_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores, 'edit_form': edit_form, 'delete_form': delete_form})
+
+def game_public_view(request, product_id):
+    game = Game.objects.get(pk=product_id)
+
+    is_creator = (request.user.is_authenticated() and game.creator == request.user.profile)
+    is_playable = (request.user.is_authenticated() and game in request.user.profile.owned_games.all() or is_creator)
+
+    topscores = sorted(game.saves.all(), key=lambda x: x.highscore, reverse=True)
+
+    return render(request, 'game/game_public_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores})
 
 
 @login_required()
@@ -187,11 +195,13 @@ def developer_view(request):
     return render(request, 'game/developer_game_list.html', {'profile':profile, 'games': games, 'form': form})
 
 
+
 def developer_public_view(request, developer_id):
     """A public view of a developer's games."""
 
     developer = User.objects.get(id=developer_id)
-    games = Game.objects.filter(creator=developer_id)
+    creator_id = developer.profile.id
+    games = Game.objects.filter(creator=creator_id)
 
     return render(request, 'game/developer_public_page.html', {'developer':developer, 'games': games})
 

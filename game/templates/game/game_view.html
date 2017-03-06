@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                Created by: <a href="/developer/{{game.creator.id}}">{{game.creator.user.username}}</a>
+                Created by: <a href="/developer/{{game.creator.user.id}}">{{game.creator.user.username}} </a>
             </li>
             <li>Price: {{game.price}}</li>
         </ul>
@@ -53,21 +53,8 @@
                 <input type="submit" name="delete_submit" value="Delete">
             </form>
         </div>
+        <br/>
         {% endif %}
-    </div>
-    <div class='col-sm-9 col-sm-offset-9'>
-        <div>
-          {% if not is_playable %}
-            <a href="./buy">
-                < Buy game
-            </a>
-        </div>
-        {% else %}
-        <div>
-            <a href="./play">< Play game</a>
-        </div>
-        {% endif %}
-        <br><br>
     </div>
 </div>
 {% endblock content %} 
