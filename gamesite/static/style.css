@@ -238,6 +238,93 @@
 /*Developer page End*/
 
 
+/*Public Game Page---Share buttons*/
+
+.social-btns {
+    text-align: center;
+}
+
+.social-btns li {
+    margin: 8px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+@media (min-width: 768px) {
+
+    .social-btns li {
+        margin: 15px;
+    }
+}
+
+
+/* Roll Button */
+.social-btn-roll {
+    background: rgba(0,0,0,0);
+    width: 40px;
+    height: 40px;
+    border: 1px solid #3b5998;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+    -webkit-transition: background 0.5s;
+    transition: background 0.5s;
+}
+
+/*.social-btn-roll:hover .social-btn-roll-icons {*/
+    /*-webkit-transform: translate3d(-50%, 0, 0);*/
+    /*transform: translate3d(-50%, 0, 0);*/
+/*}*/
+
+.social-btn-roll:hover .social-btn-roll-icon {
+    color: #fff;
+}
+
+.social-btn-roll-icons {
+    width: 200%;
+    -webkit-transition: transform 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
+.social-btn-roll-icons:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+
+.social-btn-roll-icon {
+    width: 50%;
+    line-height: 40px;
+    text-align: center;
+    display: block;
+    float: left;
+    -webkit-transition: color 0.5s;
+    transition: color 0.5s;
+}
+
+.social-btn-roll.twitter {
+    border-color: #4cc4f2;
+    color: #4cc4f2;
+}
+
+.social-btn-roll.twitter:hover {
+    background: #4cc4f2;
+}
+
+.social-btn-roll.facebook2 {
+    border-color: #3b5998;
+    color: #3b5998;
+}
+
+.social-btn-roll.facebook2:hover {
+    background: #3b5998;
+}
+
+
+
+/*End Public Game Page---Share buttons*/
+
+
 /*Footer*/
 footer {
     color: #666;
