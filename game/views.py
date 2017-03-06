@@ -98,6 +98,7 @@ def game_play_view(request, product_id):
     """View where gameplay happens."""
     game = Game.objects.get(pk=product_id)
     player = request.user.profile
+    user = request.user
 
     if game not in player.owned_games.all() and game.creator != player:
         return HttpResponseRedirect('../buy')
@@ -120,7 +121,7 @@ def game_play_view(request, product_id):
     else:
         form = SaveForm(instance=save)
 
-    return render(request, 'game/game_play_view.html', {'game': game, 'save_form': form})
+    return render(request, 'game/game_play_view.html', {'game': game, 'save_form': form, 'user': user})
 
 
 def available_games(request):
