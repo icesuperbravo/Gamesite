@@ -1,9 +1,22 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
+{% block head_extra %}
+<head>
+<!-- You can use Open Graph tags to customize link previews.
+      Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+<meta property="og:url"           content="{{url}}" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="{{game.title}}" />
+<meta property="og:description"   content="{{game.description}}" />
+<meta property="og:image"         content="{{game.url}}" />
+</head>
+{% endblock head_extra %}
+
+
 {% block content %} 
 
-<div class="row developer-page" xmlns="http://www.w3.org/1999/html" style="height:auto">
+    <div class="row developer-page" xmlns="http://www.w3.org/1999/html" style="height:auto">
     <div class="row">
     <div class="col-xs-6 col-xs-offset-3 ">
         <h1 class="title">Game Title: {{game.title}}</h1>
@@ -62,7 +75,7 @@
             </li>
 
             <li>
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{url|urlencode:""}}"  class="social-btn-roll facebook2">
+                <a  id="shareBtn" href="https://www.facebook.com/sharer/sharer.php?u={{url|urlencode:""}}&title={{game.title}}&description={{game.description}}&image={{game.image_url}}" class="social-btn-roll facebook2">
                     <div class="social-btn-roll-icons">
                         <i class="social-btn-roll-icon fa fa-facebook"></i>
                         <i class="social-btn-roll-icon fa fa-facebook"></i>
@@ -71,7 +84,6 @@
             </li>
         </ul>
     </div>
-
 </div>
 
 {% endblock content %} 
