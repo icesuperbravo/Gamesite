@@ -59,13 +59,15 @@ def game_view(request, product_id):
 
 def game_public_view(request, product_id):
     game = Game.objects.get(pk=product_id)
+    url = request.build_absolute_uri()
 
     is_creator = (request.user.is_authenticated() and game.creator == request.user.profile)
     is_playable = (request.user.is_authenticated() and game in request.user.profile.owned_games.all() or is_creator)
 
     topscores = sorted(game.saves.all(), key=lambda x: x.highscore, reverse=True)
 
-    return render(request, 'game/game_public_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores})
+
+    return render(request, 'game/game_public_view.html', {'game': game, 'is_playable': is_playable, 'topscores':topscores, 'url':url})
 
 
 @login_required()
