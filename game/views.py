@@ -174,7 +174,8 @@ def third_party_view(request):
 @login_required()
 def developer_view(request):
     """A view of the logged-in developer's games."""
-
+    profile=""
+    games=""
     if request.user.profile.is_developer():
         profile = request.user.profile
         games = Game.objects.filter(creator=request.user.profile)
